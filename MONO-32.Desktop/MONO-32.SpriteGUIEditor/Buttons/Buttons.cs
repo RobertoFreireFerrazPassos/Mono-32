@@ -23,7 +23,7 @@ internal class Buttons
                 if (Values[i].Name == "save" && !string.IsNullOrWhiteSpace(UIVariables.TextFileName))
                 {
                     var exportTexture = spriteGrid.ConvertToTexture2D(graphicsDevice);
-                    exportTexture.SaveImageAsPng(UIVariables.TextFileName);
+                    exportTexture.SaveImageAsPng(UIVariables.TextFileName + ".png");
                 }
             }
         }
