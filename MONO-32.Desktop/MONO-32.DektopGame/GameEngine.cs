@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace MONO_32.DektopGame
 {
@@ -8,6 +10,7 @@ namespace MONO_32.DektopGame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Texture2D _texture2D;
 
         public GameEngine()
         {
@@ -27,7 +30,12 @@ namespace MONO_32.DektopGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            foreach (string str in Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories))
+            {
+                int lastSlash = str.LastIndexOf('\\');
+                string textureName = ((lastSlash > -1) ? str.Substring(lastSlash + 1) : str).Replace(".png", "");
+                _texture2D = Texture2D.FromStream(GraphicsDevice, (Stream)File.OpenRead(str));
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,7 +52,9 @@ namespace MONO_32.DektopGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_texture2D, new Vector2(100, 100), Color.White);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
