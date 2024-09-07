@@ -132,11 +132,24 @@ public class Game1 : Game
         spriteBatch.Begin();
 
         // Draw the grid
+        Color gridColor = Color.Black;
+        // Draw the outer rectangle
+        spriteBatch.Draw(pixelTexture, new Rectangle(0, 0, gridSize * cellSize, 1), gridColor); // Top
+        spriteBatch.Draw(pixelTexture, new Rectangle(0, 0, 1, gridSize * cellSize), gridColor); // Left
+        spriteBatch.Draw(pixelTexture, new Rectangle(0, (gridSize * cellSize) - 1, gridSize * cellSize, 1), gridColor); // Bottom
+        spriteBatch.Draw(pixelTexture, new Rectangle((gridSize * cellSize) - 1, 0, 1, gridSize * cellSize), gridColor); // Right
+
         for (int x = 0; x < gridSize; x++)
         {
             for (int y = 0; y < gridSize; y++)
             {
+                // Draw the cell
                 spriteBatch.Draw(pixelTexture, new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize), gridColors[x, y]);
+
+                // Draw vertical lines
+                spriteBatch.Draw(pixelTexture, new Rectangle(x * cellSize, 0, 1, gridSize * cellSize), gridColor);
+                // Draw horizontal lines
+                spriteBatch.Draw(pixelTexture, new Rectangle(0, y * cellSize, gridSize * cellSize, 1), gridColor);
             }
         }
 
