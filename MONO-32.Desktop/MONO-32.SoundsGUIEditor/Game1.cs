@@ -12,7 +12,6 @@ namespace MONO_32.SoundsGUIEditor
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
