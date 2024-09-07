@@ -9,11 +9,8 @@ public class Game1 : Game
 {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
-    Texture2D pixelTexture;
     SpriteGrid spriteGrid;
-
     Palette palette;
-    Color selectedColor = Color.Black;
 
     public Game1()
     {
@@ -36,11 +33,10 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // Create a 1x1 pixel texture
-        pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
+        var pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         pixelTexture.SetData(new Color[] { Color.White });
+        spriteBatch = new SpriteBatch(GraphicsDevice);
+        UIVariables.LoadVariables(pixelTexture, palette.ColorPalette[1], 32, 32);
     }
 
     protected override void Update(GameTime gameTime)
@@ -50,8 +46,8 @@ public class Game1 : Game
         if (mouseState.LeftButton == ButtonState.Pressed)
         {
             var mousePosition = mouseState.Position;
-            spriteGrid.Update(mousePosition, selectedColor);
-            selectedColor = palette.UpdateSelectedColor(mousePosition) ?? selectedColor;
+            spriteGrid.Update(mousePosition, UIVariables.SelectedColor);
+            UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
         }
 
         if (mouseState.RightButton == ButtonState.Pressed)
@@ -68,8 +64,8 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         spriteBatch.Begin();
-        spriteGrid.Draw(spriteBatch, pixelTexture);
-        palette.Draw(spriteBatch, pixelTexture);
+        spriteGrid.Draw(spriteBatch);
+        palette.Draw(spriteBatch);
         spriteBatch.End();
 
         base.Draw(gameTime);

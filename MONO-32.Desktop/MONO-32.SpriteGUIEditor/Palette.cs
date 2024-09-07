@@ -106,11 +106,11 @@ internal class Palette
         return null;
     }
 
-    public void Draw(SpriteBatch spriteBatch, Texture2D pixelTexture)
+    public void Draw(SpriteBatch spriteBatch)
     {
         for (int i = 0; i < ColorPalette.Length; i++)
         {
-            spriteBatch.Draw(pixelTexture, PaletteRectangles[i], ColorPalette[i]);
+            spriteBatch.Draw(UIVariables.PixelTexture, PaletteRectangles[i], ColorPalette[i]);
         }
     }
 }
