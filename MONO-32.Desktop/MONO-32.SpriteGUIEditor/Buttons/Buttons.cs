@@ -8,6 +8,7 @@ namespace MONO_32.SpriteGUIEditor.Buttons;
 internal class Buttons
 {
     private List<Button> Values = new List<Button>();
+    private Button selectedButton;
 
     public Buttons(List<Button> buttons)
     {
@@ -30,12 +31,15 @@ internal class Buttons
                         }
                         break;
                     case Enums.ButtonTypeEnum.Bucket:
+                        selectedButton = Values[i]; 
                         UIVariables.PaintMode = Enums.PaintModeEnum.Bucket;
                         break;
                     case Enums.ButtonTypeEnum.Pencil:
+                        selectedButton = Values[i]; 
                         UIVariables.PaintMode = Enums.PaintModeEnum.Pencil;
                         break;
                     case Enums.ButtonTypeEnum.Eraser:
+                        selectedButton = Values[i]; 
                         UIVariables.PaintMode = Enums.PaintModeEnum.Eraser;
                         break;
                 }
@@ -47,7 +51,10 @@ internal class Buttons
     {
         for (int i = 0; i < Values.Count; i++)
         {
-            spriteBatch.Draw(Values[i].Texture, Values[i].Rectangle, Color.White);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            var color = Values[i] == selectedButton ? Color.Green : Color.Black;
+            spriteBatch.Draw(Values[i].Texture, Values[i].Rectangle, color);
+            spriteBatch.End();
         }
     }
 }

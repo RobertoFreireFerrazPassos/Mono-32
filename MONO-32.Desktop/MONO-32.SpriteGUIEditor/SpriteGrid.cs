@@ -51,6 +51,7 @@ internal class SpriteGrid
     {
         Color gridColor = Color.Black;
 
+        spriteBatch.Begin();
         // Draw selected color
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + ((GridSize + 8)* CellSize), UIVariables.OffsetY, CellSize, CellSize), UIVariables.SelectedColor);
 
@@ -72,6 +73,7 @@ internal class SpriteGrid
                 spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX, UIVariables.OffsetY + y * CellSize, GridSize * CellSize, 1), gridColor);
             }
         }
+        spriteBatch.End();
     }
 
     public void Fill(Point mousePosition)

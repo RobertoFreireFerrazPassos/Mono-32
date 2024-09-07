@@ -54,7 +54,9 @@ internal class Palette
     {
         for (int i = 0; i < ColorPalette.Length; i++)
         {
+            spriteBatch.Begin();
             spriteBatch.Draw(UIVariables.PixelTexture, PaletteRectangles[i], ColorPalette[i]);
+            spriteBatch.End();
         }
     }
 

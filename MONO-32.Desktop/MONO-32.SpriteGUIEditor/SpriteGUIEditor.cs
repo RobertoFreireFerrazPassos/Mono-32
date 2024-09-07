@@ -108,11 +108,9 @@ public class SpriteGUIEditor : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        spriteBatch.Begin();
         buttons.Draw(spriteBatch);
         spriteGrid.Draw(spriteBatch);
         palette.Draw(spriteBatch);
-        spriteBatch.End();
         textInputField.Draw(spriteBatch);
 
         base.Draw(gameTime);
