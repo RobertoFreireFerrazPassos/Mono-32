@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MONO_32.Core;
 using System.IO;
 
 namespace MONO_32.DektopGame
@@ -27,13 +28,8 @@ namespace MONO_32.DektopGame
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            foreach (string str in Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories))
-            {
-                int lastSlash = str.LastIndexOf('\\');
-                string textureName = ((lastSlash > -1) ? str.Substring(lastSlash + 1) : str).Replace(".png", "");
-                _texture2D = Texture2D.FromStream(GraphicsDevice, (Stream)File.OpenRead(str));
-            }
+            var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
+            _texture2D = textures["wall"];
         }
 
         protected override void Update(GameTime gameTime)

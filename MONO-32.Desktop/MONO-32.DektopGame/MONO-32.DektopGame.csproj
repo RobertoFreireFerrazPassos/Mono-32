@@ -23,6 +23,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MONO-32.Core\MONO-32.Core.csproj" />
     <ProjectReference Include="..\MONO-32.Engine\MONO-32.Engine.csproj" />
   </ItemGroup>
   <ItemGroup>

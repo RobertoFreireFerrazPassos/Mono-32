@@ -1,18 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MONO_32.Core;
+using MONO_32.SpriteGUIEditor.Buttons;
 using MONO_32.SpriteGUIEditor.Extensions;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MONO_32.SpriteGUIEditor;
 
-public class Game1 : Game
+public class SpriteGUIEditor : Game
 {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
     SpriteGrid spriteGrid;
     Palette palette;
+    Buttons.Buttons buttons;
 
-    public Game1()
+    public SpriteGUIEditor()
     {
         graphics = new GraphicsDeviceManager(this);
         IsMouseVisible = true;
@@ -22,7 +27,7 @@ public class Game1 : Game
     {
         graphics.PreferredBackBufferWidth = 1200;
         graphics.PreferredBackBufferHeight = 800;
-        graphics.IsFullScreen = false; // Set to true if you want full-screen mode
+        graphics.IsFullScreen = false;
         graphics.ApplyChanges();
 
         spriteGrid = new SpriteGrid(16, 32);
@@ -103,7 +108,16 @@ public class Game1 : Game
         UIVariables.LoadVariables(pixelTexture, palette.ColorPalette[1], 32, 32);
         palette.CreatePalleteRectangles(
             (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
-            UIVariables.OffsetY);
+            3 * spriteGrid.CellSize + UIVariables.OffsetY);
+        var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
+        var saveButton = new SaveButton(
+            (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
+            UIVariables.OffsetY,
+            textures["save_button"]);
+        buttons = new Buttons.Buttons(new List<Button>()
+        {
+            saveButton
+        });
     }
 
     protected override void Update(GameTime gameTime)
@@ -115,12 +129,7 @@ public class Game1 : Game
             var mousePosition = mouseState.Position;
             spriteGrid.Update(mousePosition, UIVariables.SelectedColor);
             UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
-        }
-
-        if (mouseState.RightButton == ButtonState.Pressed)
-        {
-            var exportTexture = spriteGrid.ConvertToTexture2D(GraphicsDevice);
-            exportTexture.SaveAsPng();
+            buttons.Update(mousePosition, spriteGrid, GraphicsDevice);
         }
 
         base.Update(gameTime);
@@ -131,6 +140,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         spriteBatch.Begin();
+        buttons.Draw(spriteBatch);
         spriteGrid.Draw(spriteBatch);
         palette.Draw(spriteBatch);
         spriteBatch.End();

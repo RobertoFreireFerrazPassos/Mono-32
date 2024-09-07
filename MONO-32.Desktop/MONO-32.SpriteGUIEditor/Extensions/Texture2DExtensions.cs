@@ -7,10 +7,10 @@ namespace MONO_32.SpriteGUIEditor.Extensions;
 
 public static class Texture2DExtensions
 {
-    public static void SaveAsPng(this Texture2D texture)
+    public static void SaveImageAsPng(this Texture2D texture, string fileName)
     {
         var projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\..\MONO-32.DektopGame\assets\imgs"));
-        var filePath = Path.Combine(projectRootPath, "wall.png");
+        var filePath = Path.Combine(projectRootPath, fileName);
 
         var data = new Color[texture.Width * texture.Height];
         texture.GetData(data);

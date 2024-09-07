@@ -1,3 +1,3 @@
 ﻿
-using var game = new MONO_32.SoundsGUIEditor.Game1();
+using var game = new MONO_32.SoundsGUIEditor.SoundsGUIEditor();
 game.Run();

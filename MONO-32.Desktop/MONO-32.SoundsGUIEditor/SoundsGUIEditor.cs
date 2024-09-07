@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MONO_32.SoundsGUIEditor
 {
-    public class Game1 : Game
+    public class SoundsGUIEditor : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Game1()
+        public SoundsGUIEditor()
         {
             _graphics = new GraphicsDeviceManager(this);
             IsMouseVisible = true;
