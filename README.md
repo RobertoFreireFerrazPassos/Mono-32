@@ -3,9 +3,7 @@ A game engine based on monogame framework
 
 # Backlog items
 
-## 1 Remove all Content folder including mgcb file
-
-Instead use something similar as  Texture2D.FromStream from MTexture class from Monocle repository
+## From MONO-32.SpriteGUIEditor, Update assets\\imgs
 
 # References:
 
