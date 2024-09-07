@@ -55,6 +55,15 @@ public class SpriteGUIEditor : Game
             new Color(0xFF, 0xC0, 0x80), // Coral
             new Color(0xFF, 0x00, 0x40), // Red-Orange
 
+            // Reds and Pink (Moderately Less Intense)
+            new Color(0xBF, 0x40, 0x40), // Soft Red
+            new Color(0x60, 0x00, 0x00), // Soft Dark Red
+            new Color(0xBF, 0x6C, 0x6C), // Soft Light Red
+            new Color(0xBF, 0x40, 0x60), // Soft Pink
+            new Color(0xBF, 0x6C, 0x6C), // Soft Salmon
+            new Color(0xBF, 0xBF, 0x6C), // Soft Coral
+            new Color(0xBF, 0x40, 0x40), // Soft Red-Orange
+
             // Greens
             new Color(0x00, 0xFF, 0x00), // Green
             new Color(0x00, 0x80, 0x00), // Dark Green
@@ -66,6 +75,16 @@ public class SpriteGUIEditor : Game
             new Color(0x40, 0xFF, 0x40), // Lime Green
             new Color(0xC0, 0xFF, 0x80), // Mint
 
+            // Greens (Moderately Less Intense)
+            new Color(0x40, 0xBF, 0x40), // Soft Green
+            new Color(0x20, 0x40, 0x20), // Soft Dark Green
+            new Color(0x6C, 0xBF, 0x6C), // Soft Light Green
+            new Color(0x40, 0xBF, 0x60), // Soft Light Green 2
+            new Color(0x6C, 0xBF, 0x20), // Soft Lime
+            new Color(0x40, 0xBF, 0x30), // Soft Green-Yellow
+            new Color(0x20, 0xBF, 0x20), // Soft Yellow-Green
+            new Color(0x30, 0xBF, 0x30), // Soft Lime Green
+
             // Blues
             new Color(0x00, 0x00, 0xFF), // Blue
             new Color(0x00, 0x00, 0x80), // Dark Blue
@@ -76,11 +95,26 @@ public class SpriteGUIEditor : Game
             new Color(0x40, 0xFF, 0xFF), // Aqua
             new Color(0x00, 0xFF, 0xFF), // Aqua 2
 
+            // Blues (Moderately Less Intense)
+            new Color(0x40, 0x40, 0xBF), // Soft Blue
+            new Color(0x20, 0x20, 0x60), // Soft Dark Blue
+            new Color(0x6C, 0x6C, 0xBF), // Soft Light Blue
+            new Color(0x40, 0x60, 0xBF), // Soft Light Blue 2
+            new Color(0x30, 0x30, 0xBF), // Soft Royal Blue
+            new Color(0x60, 0xBF, 0xBF), // Soft Sky Blue
+            new Color(0x30, 0xBF, 0xBF), // Soft Aqua
+            new Color(0x40, 0xBF, 0xBF), // Soft Aqua 2
+
             // Yellows
             new Color(0xFF, 0xFF, 0x00), // Yellow
             new Color(0xFF, 0xFF, 0x80), // Light Yellow
             new Color(0xFF, 0xFF, 0x40), // Light Yellow 2
             new Color(0xFF, 0xFF, 0x80), // Lemon
+
+            // Yellows (Moderately Less Intense)
+            new Color(0xBF, 0xBF, 0x40), // Soft Yellow
+            new Color(0xBF, 0xBF, 0x60), // Soft Light Yellow
+            new Color(0xBF, 0xBF, 0x40), // Soft Light Yellow 2
 
             // Purples and Magentas
             new Color(0xFF, 0x00, 0xFF), // Magenta
@@ -91,14 +125,30 @@ public class SpriteGUIEditor : Game
             new Color(0xFF, 0xC0, 0xFF), // Lavender
             new Color(0xC0, 0x80, 0xFF), // Lilac
 
+             // Purples and Magentas (Moderately Less Intense)
+            new Color(0xBF, 0x40, 0xBF), // Soft Magenta
+            new Color(0x60, 0x20, 0x60), // Soft Purple
+            new Color(0x60, 0x20, 0xBF), // Soft Violet
+            new Color(0xBF, 0x60, 0xBF), // Soft Light Magenta
+            new Color(0xBF, 0x40, 0xBF), // Soft Light Magenta 2
+            new Color(0xBF, 0xBF, 0xBF), // Soft Lavender
+            new Color(0xBF, 0x80, 0xBF), // Soft Lilac
+
             // Oranges and Browns
             new Color(0xFF, 0x80, 0x00), // Orange
             new Color(0xFF, 0xC0, 0x80), // Coral
 
+            // Oranges and Browns (Moderately Less Intense)
+            new Color(0xBF, 0x60, 0x00), // Soft Orange
+
             // Cyan and Teal
             new Color(0x00, 0x80, 0x80), // Teal
             new Color(0x80, 0xFF, 0xFF), // Light Cyan
-        }, 12, 32);
+
+            // Cyan and Teal (Moderately Less Intense)
+            new Color(0x00, 0x60, 0x60), // Soft Teal
+            new Color(0x60, 0xBF, 0xBF), // Soft Light Cyan
+        }, 8, 32);
         base.Initialize();
     }
 
