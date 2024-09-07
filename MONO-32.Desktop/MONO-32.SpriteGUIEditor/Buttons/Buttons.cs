@@ -20,14 +20,24 @@ internal class Buttons
         {
             if (Values[i].Rectangle.Contains(mousePosition))
             {
-                if (Values[i].Name == "save" && !string.IsNullOrWhiteSpace(UIVariables.TextFileName))
+                switch (Values[i].Type)
                 {
-                    var exportTexture = spriteGrid.ConvertToTexture2D(graphicsDevice);
-                    exportTexture.SaveImageAsPng(UIVariables.TextFileName + ".png");
-                }
-                else if(Values[i].Name == "bucket")
-                {
-                    UIVariables.PaintMode = Enums.PaintModeEnum.Bucket;
+                    case Enums.ButtonTypeEnum.Save:
+                        if (!string.IsNullOrWhiteSpace(UIVariables.TextFileName))
+                        {
+                            var exportTexture = spriteGrid.ConvertToTexture2D(graphicsDevice);
+                            exportTexture.SaveImageAsPng(UIVariables.TextFileName + ".png");
+                        }
+                        break;
+                    case Enums.ButtonTypeEnum.Bucket:
+                        UIVariables.PaintMode = Enums.PaintModeEnum.Bucket;
+                        break;
+                    case Enums.ButtonTypeEnum.Pencil:
+                        UIVariables.PaintMode = Enums.PaintModeEnum.Pencil;
+                        break;
+                    case Enums.ButtonTypeEnum.Eraser:
+                        UIVariables.PaintMode = Enums.PaintModeEnum.Eraser;
+                        break;
                 }
             }
         }

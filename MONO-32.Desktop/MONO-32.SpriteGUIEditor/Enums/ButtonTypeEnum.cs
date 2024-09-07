@@ -1,8 +1,9 @@
 ﻿namespace MONO_32.SpriteGUIEditor.Enums;
 
-internal enum PaintModeEnum
+internal enum ButtonTypeEnum
 {
-    Pencil = 1,
+    Save = 1,
     Bucket = 2,
     Eraser = 3,
+    Pencil = 4,
 }

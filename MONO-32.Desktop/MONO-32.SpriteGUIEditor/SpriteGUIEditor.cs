@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MONO_32.Core;
 using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor.Buttons;
+using MONO_32.SpriteGUIEditor.Enums;
 using System.Collections.Generic;
 using System.IO;
 
@@ -36,8 +37,6 @@ public class SpriteGUIEditor : Game
         spriteGrid = new SpriteGrid(16, 32);
         palette = new Palette(new Color[]
         {
-            new Color(0,0,0,0),
-
             // Grays
             new Color(0x00, 0x00, 0x00), // Black
             new Color(0xFF, 0xFF, 0xFF), // White
@@ -114,19 +113,31 @@ public class SpriteGUIEditor : Game
             6 * spriteGrid.CellSize + UIVariables.OffsetY);
         var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
         var saveButton = new Button(
-            "save",
+            ButtonTypeEnum.Save,
             (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
             UIVariables.OffsetY,
             textures["save_button"]);
-        var bucketButton = new Button(
-            "bucket",
+        var pencilButton = new Button(
+            ButtonTypeEnum.Pencil,
             (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
+            3 * spriteGrid.CellSize + UIVariables.OffsetY,
+            textures["pencil_button"]);
+        var eraserButton = new Button(
+            ButtonTypeEnum.Eraser,
+            (spriteGrid.GridSize + 4) * spriteGrid.CellSize + UIVariables.OffsetX,
+            3 * spriteGrid.CellSize + UIVariables.OffsetY,
+            textures["eraser_button"]);
+        var bucketButton = new Button(
+            ButtonTypeEnum.Bucket,
+            (spriteGrid.GridSize + 7) * spriteGrid.CellSize + UIVariables.OffsetX,
             3 * spriteGrid.CellSize + UIVariables.OffsetY,
             textures["bucket_button"]);
         buttons = new Buttons.Buttons(new List<Button>()
         {
             saveButton,
-            bucketButton
+            bucketButton,
+            eraserButton,
+            pencilButton
         });
 
         UIVariables.DefaultFont = Content.Load<SpriteFont>(@"fonts\default");

@@ -32,13 +32,17 @@ internal class SpriteGrid
 
         if (x >= 0 && x < GridSize && y >= 0 && y < GridSize)
         {
-            if (UIVariables.PaintMode == Enums.PaintModeEnum.Bucket)
+            switch (UIVariables.PaintMode)
             {
-                Fill(mousePosition);
-            }
-            else
-            {
-                GridColors[x, y] = UIVariables.SelectedColor;
+                case Enums.PaintModeEnum.Bucket:
+                    Fill(mousePosition);
+                    break;
+                case Enums.PaintModeEnum.Pencil:
+                    GridColors[x, y] = UIVariables.SelectedColor;
+                    break;
+                case Enums.PaintModeEnum.Eraser:
+                    GridColors[x, y] = new Color(0, 0, 0, 0);
+                    break;
             }
         }
     }
