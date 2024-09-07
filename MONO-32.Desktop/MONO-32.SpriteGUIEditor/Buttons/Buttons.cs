@@ -25,6 +25,10 @@ internal class Buttons
                     var exportTexture = spriteGrid.ConvertToTexture2D(graphicsDevice);
                     exportTexture.SaveImageAsPng(UIVariables.TextFileName + ".png");
                 }
+                else if(Values[i].Name == "bucket")
+                {
+                    UIVariables.PaintMode = Enums.PaintModeEnum.Bucket;
+                }
             }
         }
     }

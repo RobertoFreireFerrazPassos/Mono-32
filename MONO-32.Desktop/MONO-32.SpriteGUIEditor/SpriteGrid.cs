@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace MONO_32.SpriteGUIEditor;
 
@@ -18,24 +19,30 @@ internal class SpriteGrid
         {
             for (int y = 0; y < GridSize; y++)
             {
-                GridColors[x, y] = new Color(0, 0, 0, 0); // Default color
+                GridColors[x, y] = new Color(0, 0, 0, 0); // invisible
             }
         }
     }
 
-    public void Update(Point mousePosition, Color selectedColor)
+    public void Update(Point mousePosition)
     {
-        // Convert mouse position to grid cell
-        int x = mousePosition.X - UIVariables.OffsetX >= 0 ? (mousePosition.X - UIVariables.OffsetX) / CellSize : -1;
-        int y = mousePosition.Y - UIVariables.OffsetY >= 0 ? (mousePosition.Y - UIVariables.OffsetY) / CellSize : -1;
+        var gridPoint = ConvertMousePositionToGridCell(mousePosition);
+        int x = gridPoint.X;
+        int y = gridPoint.Y;
 
         if (x >= 0 && x < GridSize && y >= 0 && y < GridSize)
         {
-            // Change the color of the cell
-            GridColors[x, y] = selectedColor;
+            if (UIVariables.PaintMode == Enums.PaintModeEnum.Bucket)
+            {
+                Fill(mousePosition);
+            }
+            else
+            {
+                GridColors[x, y] = UIVariables.SelectedColor;
+            }
         }
     }
-    
+
     public void Draw(SpriteBatch spriteBatch)
     {
         Color gridColor = Color.Black;
@@ -59,6 +66,33 @@ internal class SpriteGrid
         }
     }
 
+    public void Fill(Point mousePosition)
+    {
+        var gridPoint = ConvertMousePositionToGridCell(mousePosition);
+        Color targetColor = GridColors[gridPoint.X, gridPoint.Y];
+        if (targetColor == UIVariables.SelectedColor) return;
+
+        Queue<Point> pixels = new Queue<Point>();
+        pixels.Enqueue(gridPoint);
+
+        while (pixels.Count > 0)
+        {
+            Point p = pixels.Dequeue();
+            int x = p.X;
+            int y = p.Y;
+
+            if (x < 0 || x >= GridSize || y < 0 || y >= GridSize || GridColors[x, y] != targetColor)
+                continue;
+
+            GridColors[x, y] = UIVariables.SelectedColor;
+
+            pixels.Enqueue(new Point(x - 1, y));
+            pixels.Enqueue(new Point(x + 1, y));
+            pixels.Enqueue(new Point(x, y - 1));
+            pixels.Enqueue(new Point(x, y + 1));
+        }
+    }
+
     public Texture2D ConvertToTexture2D(GraphicsDevice graphicsDevice)
     {
         var exportTexture = new Texture2D(graphicsDevice, GridSize, GridSize);
@@ -73,5 +107,14 @@ internal class SpriteGrid
         exportTexture.SetData(colorData);
 
         return exportTexture;
+    }
+
+    private Point ConvertMousePositionToGridCell(Point mousePosition)
+    {
+        // Convert mouse position to grid cell
+        int x = mousePosition.X - UIVariables.OffsetX >= 0 ? (mousePosition.X - UIVariables.OffsetX) / CellSize : -1;
+        int y = mousePosition.Y - UIVariables.OffsetY >= 0 ? (mousePosition.Y - UIVariables.OffsetY) / CellSize : -1;
+
+        return new Point(x, y);
     }
 }

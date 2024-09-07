@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MONO_32.SpriteGUIEditor.Enums;
 
 namespace MONO_32.SpriteGUIEditor;
 
@@ -17,6 +18,8 @@ internal static class UIVariables
 
     public static string TextFileName = "";
 
+    public static PaintModeEnum PaintMode;
+
     public static void LoadVariables(
         Texture2D pixelTexture,
         Color color,
@@ -27,5 +30,6 @@ internal static class UIVariables
         SelectedColor = color;
         OffsetX = offsetX;
         OffsetY = offsetY;
+        PaintMode = PaintModeEnum.Pencil;
     }
 }

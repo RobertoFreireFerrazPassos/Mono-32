@@ -111,16 +111,22 @@ public class SpriteGUIEditor : Game
         UIVariables.LoadVariables(pixelTexture, palette.ColorPalette[1], 32, 32);
         palette.CreatePalleteRectangles(
             (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
-            3 * spriteGrid.CellSize + UIVariables.OffsetY);
+            6 * spriteGrid.CellSize + UIVariables.OffsetY);
         var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
         var saveButton = new Button(
             "save",
             (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
             UIVariables.OffsetY,
             textures["save_button"]);
+        var bucketButton = new Button(
+            "bucket",
+            (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
+            3 * spriteGrid.CellSize + UIVariables.OffsetY,
+            textures["bucket_button"]);
         buttons = new Buttons.Buttons(new List<Button>()
         {
-            saveButton
+            saveButton,
+            bucketButton
         });
 
         UIVariables.DefaultFont = Content.Load<SpriteFont>(@"fonts\default");
@@ -140,7 +146,7 @@ public class SpriteGUIEditor : Game
         if (mouseState.LeftButton == ButtonState.Pressed)
         {
             var mousePosition = mouseState.Position;
-            spriteGrid.Update(mousePosition, UIVariables.SelectedColor);
+            spriteGrid.Update(mousePosition);
             UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
             buttons.Update(mousePosition, spriteGrid, GraphicsDevice);
         }
