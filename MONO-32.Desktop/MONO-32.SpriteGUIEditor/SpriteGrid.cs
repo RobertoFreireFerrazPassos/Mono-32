@@ -52,7 +52,7 @@ internal class SpriteGrid
         Color gridColor = Color.Black;
 
         // Draw selected color
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + ((GridSize + 12)* CellSize), UIVariables.OffsetY, 2*CellSize, 2*CellSize), UIVariables.SelectedColor);
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + ((GridSize + 8)* CellSize), UIVariables.OffsetY, CellSize, CellSize), UIVariables.SelectedColor);
 
         // Draw the outer rectangle with UISettings.Offsets
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX, UIVariables.OffsetY, GridSize * CellSize, 1), gridColor); // Top
