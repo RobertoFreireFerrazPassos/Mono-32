@@ -1,14 +1,6 @@
 # Mono-32
 A game engine based on monogame framework
 
-# Items: 
-
-## 1 - Create Project
-
-Mono-32.Desktop project references Mono-32.Engine
-Add git ignore
-Add readme
-
 # Backlog items
 
 - Add Nopipeline

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace MONO_32.Desktop
+namespace MONO_32.DektopGame
 {
     public class GameEngine : Game
     {
