@@ -27,7 +27,7 @@
     <ProjectReference Include="..\MONO-32.Core\MONO-32.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="assets\imgs\save_button.png">
+    <None Update="assets\**\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

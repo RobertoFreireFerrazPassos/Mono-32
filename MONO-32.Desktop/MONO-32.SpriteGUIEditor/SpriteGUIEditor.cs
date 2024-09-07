@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MONO_32.Core;
 using MONO_32.SpriteGUIEditor.Buttons;
-using MONO_32.SpriteGUIEditor.Extensions;
 using System.Collections.Generic;
 using System.IO;
 
@@ -25,6 +24,8 @@ public class SpriteGUIEditor : Game
 
     protected override void Initialize()
     {
+        Content.RootDirectory = @"assets";
+
         graphics.PreferredBackBufferWidth = 1200;
         graphics.PreferredBackBufferHeight = 800;
         graphics.IsFullScreen = false;
@@ -118,6 +119,8 @@ public class SpriteGUIEditor : Game
         {
             saveButton
         });
+
+        UIVariables.DefaultFont = Content.Load<SpriteFont>(@"fonts\default");
     }
 
     protected override void Update(GameTime gameTime)

@@ -13,6 +13,8 @@ internal static class UIVariables
 
     public static Color SelectedColor;
 
+    public static SpriteFont DefaultFont;
+
     public static void LoadVariables(
         Texture2D pixelTexture,
         Color color,

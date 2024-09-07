@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using MONO_32.SpriteGUIEditor.Extensions;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 
 namespace MONO_32.SpriteGUIEditor.Buttons;
 

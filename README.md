@@ -3,7 +3,7 @@ A game engine based on monogame framework
 
 # Backlog items
 
-## From MONO-32.SpriteGUIEditor, Update assets\\imgs
+## Add input field
 
 # References:
 
