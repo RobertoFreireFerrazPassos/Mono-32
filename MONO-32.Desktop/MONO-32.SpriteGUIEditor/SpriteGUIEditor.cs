@@ -35,7 +35,7 @@ public class SpriteGUIEditor : Game
         graphics.ApplyChanges();
 
         spriteGrid = new SpriteGrid(32, 16);
-        palette = new Palette(ColorPaletteEnum.MiniMax32, 8, 32);
+        palette = new Palette(ColorPaletteEnum.Vinik24, 8, 32);
         base.Initialize();
     }
 
