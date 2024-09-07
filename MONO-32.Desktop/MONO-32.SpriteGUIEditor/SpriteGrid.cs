@@ -6,11 +6,13 @@ namespace MONO_32.SpriteGUIEditor;
 internal class SpriteGrid
 {
     public Color[,] GridColors;
-    public int CellSize = 16; // Size of each cell in the grid
-    public int GridSize = 32;  // 8x8 grid
+    public int CellSize; // Size of each cell in the grid
+    public int GridSize;  // 8x8 grid
 
-    public SpriteGrid()
+    public SpriteGrid(int cellSize, int gridSize)
     {
+        CellSize = cellSize;
+        GridSize = gridSize;
         GridColors = new Color[GridSize, GridSize];
         for (int x = 0; x < GridSize; x++)
         {
