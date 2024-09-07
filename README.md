@@ -9,12 +9,9 @@ Mono-32.Desktop project references Mono-32.Engine
 Add git ignore
 Add readme
 
-
-
-
 # Backlog items
 
-- Add Nopipeline https://github.com/Martenfur/Nopipeline
+- Add Nopipeline
 
 # References:
 
@@ -25,3 +22,8 @@ https://github.com/aloisdeniel/awesome-monogame
 https://github.com/JamesMcMahon/monocle-engine
 
 https://github.com/Martenfur/Nopipeline
+
+https://github.com/craftworkgames/MonoGame.Extended
+
+https://www.monogameextended.net/docs/getting-started/installation-monogame/
+
