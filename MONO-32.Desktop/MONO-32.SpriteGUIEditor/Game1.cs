@@ -12,21 +12,11 @@ public class Game1 : Game
     SpriteBatch spriteBatch;
     Texture2D pixelTexture;
     Color[,] gridColors;
-    int cellSize = 8; // Size of each cell in the grid
+    int cellSize = 16; // Size of each cell in the grid
     int gridSize = 32;  // 8x8 grid
-    Color selectedColor = Color.Black; // Default color
 
-    // Define a palette of colors
-    Color[] colorPalette = new Color[]
-    {
-        new Color(0,0,0,0), Color.Black, Color.Red, Color.Green, Color.Blue,
-        Color.Yellow, Color.Cyan, Color.Magenta, Color.White
-    };
-
-    int paletteSize = 32; // Size of each color cell in the palette
-    Rectangle[] paletteRectangles;
-    int paletteStartX = 300; // X position of the palette
-    int paletteStartY = 100; // Y position of the palette
+    Palette palette;
+    Color selectedColor = Color.Black;
 
     public Game1()
     {
@@ -37,8 +27,13 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        graphics.PreferredBackBufferWidth = 1200;
+        graphics.PreferredBackBufferHeight = 800;
+        graphics.IsFullScreen = false; // Set to true if you want full-screen mode
+        graphics.ApplyChanges();
+
         ResetGridColors();
-        InitializePalette();
+        palette = new Palette();
         base.Initialize();
     }
 
@@ -51,17 +46,6 @@ public class Game1 : Game
             {
                 gridColors[x, y] = new Color(0,0,0,0); // Default color
             }
-        }
-    }
-
-    private void InitializePalette()
-    {
-        paletteRectangles = new Rectangle[colorPalette.Length];
-        for (int i = 0; i < colorPalette.Length; i++)
-        {
-            int x = paletteStartX + (i % 4) * paletteSize; // Arrange palette in 4 columns
-            int y = paletteStartY + (i / 4) * paletteSize; // Arrange palette in rows
-            paletteRectangles[i] = new Rectangle(x, y, paletteSize, paletteSize);
         }
     }
 
@@ -90,14 +74,7 @@ public class Game1 : Game
                 gridColors[x, y] = selectedColor;
             }
 
-            // Check if the mouse click is within the palette area
-            for (int i = 0; i < colorPalette.Length; i++)
-            {
-                if (paletteRectangles[i].Contains(mouseState.Position))
-                {
-                    selectedColor = colorPalette[i];
-                }
-            }
+            selectedColor = palette.UpdateSelectedColor(mouseState.Position) ?? selectedColor;
         }
 
         if (mouseState.RightButton == ButtonState.Pressed)
@@ -153,11 +130,7 @@ public class Game1 : Game
             }
         }
 
-        // Draw the color palette
-        for (int i = 0; i < colorPalette.Length; i++)
-        {
-            spriteBatch.Draw(pixelTexture, paletteRectangles[i], colorPalette[i]);
-        }
+        palette.Draw(spriteBatch, pixelTexture);
 
         spriteBatch.End();
 
