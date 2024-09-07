@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MONO_32.Core;
+using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor.Buttons;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,7 @@ public class SpriteGUIEditor : Game
     SpriteGrid spriteGrid;
     Palette palette;
     Buttons.Buttons buttons;
+    TextInputField textInputField;
 
     public SpriteGUIEditor()
     {
@@ -111,7 +113,8 @@ public class SpriteGUIEditor : Game
             (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
             3 * spriteGrid.CellSize + UIVariables.OffsetY);
         var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
-        var saveButton = new SaveButton(
+        var saveButton = new Button(
+            "save",
             (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
             UIVariables.OffsetY,
             textures["save_button"]);
@@ -121,6 +124,13 @@ public class SpriteGUIEditor : Game
         });
 
         UIVariables.DefaultFont = Content.Load<SpriteFont>(@"fonts\default");
+        textInputField = new TextInputField(
+            UIVariables.DefaultFont, 
+            new Rectangle(
+                saveButton.Rectangle.X + 3 * spriteGrid.CellSize,
+                saveButton.Rectangle.Y, 
+                120, 
+                saveButton.Rectangle.Height));
     }
 
     protected override void Update(GameTime gameTime)
@@ -135,6 +145,8 @@ public class SpriteGUIEditor : Game
             buttons.Update(mousePosition, spriteGrid, GraphicsDevice);
         }
 
+        textInputField.Update(gameTime);
+        InputUtils.Update();
         base.Update(gameTime);
     }
 
@@ -147,6 +159,7 @@ public class SpriteGUIEditor : Game
         spriteGrid.Draw(spriteBatch);
         palette.Draw(spriteBatch);
         spriteBatch.End();
+        textInputField.Draw(spriteBatch);
 
         base.Draw(gameTime);
     }

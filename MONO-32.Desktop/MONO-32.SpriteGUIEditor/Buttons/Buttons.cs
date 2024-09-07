@@ -20,8 +20,11 @@ internal class Buttons
         {
             if (Values[i].Rectangle.Contains(mousePosition))
             {
-                var exportTexture = spriteGrid.ConvertToTexture2D(graphicsDevice);
-                exportTexture.SaveImageAsPng("wall.png");
+                if (Values[i].Name == "save" && !string.IsNullOrWhiteSpace(UIVariables.TextFileName))
+                {
+                    var exportTexture = spriteGrid.ConvertToTexture2D(graphicsDevice);
+                    exportTexture.SaveImageAsPng(UIVariables.TextFileName);
+                }
             }
         }
     }
