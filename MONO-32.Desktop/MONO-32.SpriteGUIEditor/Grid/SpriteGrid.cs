@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor;
+using MONO_32.SpriteGUIEditor.Buttons;
+using MONO_32.SpriteGUIEditor.Enums;
 using System.Collections.Generic;
 
 namespace Grid;
@@ -14,6 +16,7 @@ internal class SpriteGrid
     private const int MaxHistorySize = 30;
     public int CellSize;
     public int GridSize;
+    private List<Button> Buttons = new List<Button>();
 
     public SpriteGrid(int cellSize, int gridSize)
     {
@@ -27,6 +30,11 @@ internal class SpriteGrid
                 GridColors[x, y] = new Color(0, 0, 0, 0); // invisible
             }
         }
+    }
+
+    public void AddButtons(List<Button> buttons)
+    {
+        Buttons = buttons;
     }
 
     public void UpdateMouseLeftClicked(Point mousePosition, int scaleFactor)
@@ -116,7 +124,6 @@ internal class SpriteGrid
         spriteBatch.End();
     }
 
-
     public void DrawGrid(SpriteBatch spriteBatch, int scaleFactor, Color gridColor)
     {
         int scaledCellSize = CellSize / scaleFactor;
@@ -137,6 +144,27 @@ internal class SpriteGrid
                 spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + y * scaledCellSize, GridSize * scaledCellSize, 1), gridColor);
             }
         }
+        spriteBatch.End();
+    }
+
+    public void DrawButtons(SpriteBatch spriteBatch, Point translation)
+    {
+        spriteBatch.Begin();
+        // Get offset values
+        var (ofx, ofy) = getOffsetValues();
+
+        for (int i = 0; i < Buttons.Count; i++)
+        {
+            var color = Color.Black;
+
+            // Calculate the position with scaling and translation
+            int drawX = ofx + i * Buttons[i].Rectangle.Width + translation.X;
+            int drawY = ofy + translation.Y;
+            
+            // Draw the cell with scaling and translation
+            spriteBatch.Draw(Buttons[i].Texture, new Rectangle(drawX, drawY, Buttons[i].Rectangle.Width, Buttons[i].Rectangle.Height), color);
+        }
+
         spriteBatch.End();
     }
 

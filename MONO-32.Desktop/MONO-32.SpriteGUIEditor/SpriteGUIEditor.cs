@@ -35,9 +35,6 @@ public class SpriteGUIEditor : Game
         graphics.PreferredBackBufferHeight = 800;
         graphics.IsFullScreen = false;
         graphics.ApplyChanges();
-
-        spriteGrids = new SpriteGrids();
-        spriteGrids.AddSprite();
         palette = new Palette(ColorPaletteEnum.Vinik24, 8, 32);
         base.Initialize();
     }
@@ -57,19 +54,19 @@ public class SpriteGUIEditor : Game
             32, 
             32);
         palette.CreatePalleteRectangles();
-        var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
+        UIVariables.Textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
         var saveButton = new Button(
             ButtonTypeEnum.Save,
-            textures["save_button"]);
+            UIVariables.Textures["save_button"]);
         var pencilButton = new Button(
             ButtonTypeEnum.Pencil,
-            textures["pencil_button"]);
+            UIVariables.Textures["pencil_button"]);
         var eraserButton = new Button(
             ButtonTypeEnum.Eraser,
-            textures["eraser_button"]);
+            UIVariables.Textures["eraser_button"]);
         var bucketButton = new Button(
             ButtonTypeEnum.Bucket,
-            textures["bucket_button"]);
+            UIVariables.Textures["bucket_button"]);
         buttons = new Buttons.Buttons(new List<Button>()
             {
                 saveButton,
@@ -86,6 +83,8 @@ public class SpriteGUIEditor : Game
                 saveButton.Rectangle.Y,
                 UIVariables.TextInputFieldWidth,
                 saveButton.Rectangle.Height));
+
+        spriteGrids = new SpriteGrids();
     }
 
     protected override void Update(GameTime gameTime)

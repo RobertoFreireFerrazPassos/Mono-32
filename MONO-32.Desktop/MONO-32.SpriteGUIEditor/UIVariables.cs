@@ -1,11 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MONO_32.SpriteGUIEditor.Enums;
+using System.Collections.Generic;
 
 namespace MONO_32.SpriteGUIEditor;
 
 internal static class UIVariables
 {
+    public static Dictionary<string, Texture2D> Textures;
+
     public static Texture2D PixelTexture;
 
     public static int OffsetX;
