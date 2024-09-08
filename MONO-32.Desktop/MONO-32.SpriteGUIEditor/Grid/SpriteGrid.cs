@@ -125,6 +125,15 @@ internal class SpriteGrid
         spriteBatch.End();
     }
 
+    public Rectangle GetGridRectangle(int scaleFactor, Point translation)
+    {
+        int scaledCellSize = CellSize / scaleFactor;
+        var (ofx, ofy) = getOffsetValues();
+        ofx = ofx + translation.X;
+        ofy = ofy + translation.Y;
+        return new Rectangle(ofx, ofy, GridSize * scaledCellSize, GridSize * scaledCellSize);
+    }
+
     public void DrawButtons(SpriteBatch spriteBatch, Point translation)
     {
         spriteBatch.Begin();

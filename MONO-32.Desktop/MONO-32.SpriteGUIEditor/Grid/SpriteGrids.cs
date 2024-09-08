@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MONO_32.SpriteGUIEditor.Buttons;
 using MONO_32.SpriteGUIEditor.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 
 namespace MONO_32.SpriteGUIEditor.Grid;
 
@@ -79,7 +81,7 @@ internal class SpriteGrids
     public void UpdateMouseLeftClicked(Point mousePosition)
     {
         currentSpriteGrid.UpdateMouseLeftClicked(mousePosition, scaleFactor);
-
+        UpdateMouseLeftClickedMiniatureGrid(mousePosition);
     }
 
     public void UpdateMouseLeftReleased(Point mousePosition)
@@ -99,13 +101,19 @@ internal class SpriteGrids
         currentSpriteGrid.Draw(spriteBatch, scaleFactor, Point.Zero);
         currentSpriteGrid.DrawGrid(spriteBatch, scaleFactor, Point.Zero, Color.Black);
 
+        // draw miniature
         for (int i = 0; i < spriteGrids.Count; i++)
         {
-            var point = GetButtonPoint(i);
             spriteGrids[i].Draw(spriteBatch, miniatureScale, new Point(-UIVariables.Edition.Width + i * totalSize / miniatureScale, 2 * UIVariables.Margin + totalSize));
-            spriteGrids[i].DrawGrid(spriteBatch, miniatureScale, new Point(-UIVariables.Edition.Width + i * totalSize / miniatureScale, 2 * UIVariables.Margin + totalSize), Color.Black);
-            spriteGrids[i].DrawButtons(spriteBatch, point);
+            spriteGrids[i].DrawGrid(spriteBatch, miniatureScale, GetMiniatureGridPoint(i), Color.Black);
+            spriteGrids[i].DrawButtons(spriteBatch, GetButtonPoint(i));
         }
+    }
+
+    private Point GetMiniatureGridPoint(int i)
+    {
+        var totalSize = UIVariables.CellSize * UIVariables.GridSize;
+        return new Point(-UIVariables.Edition.Width + i * totalSize / miniatureScale, 2 * UIVariables.Margin + totalSize);
     }
 
     private Point GetButtonPoint(int i)
@@ -157,6 +165,19 @@ internal class SpriteGrids
                             return;
                     }
                 }
+            }
+        }
+    }
+
+    private void UpdateMouseLeftClickedMiniatureGrid(Point mousePosition)
+    {
+        for (int i = 0; i < spriteGrids.Count; i++)
+        {
+            var miniatureGridRectangle = spriteGrids[i].GetGridRectangle(miniatureScale, GetMiniatureGridPoint(i));
+
+            if (miniatureGridRectangle.Contains(mousePosition))
+            {
+                currentSpriteGrid = spriteGrids[i];
             }
         }
     }
