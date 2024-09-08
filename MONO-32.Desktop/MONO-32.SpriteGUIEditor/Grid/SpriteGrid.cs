@@ -90,31 +90,35 @@ internal class SpriteGrid
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch, int scaleFactor, Point translation)
     {
-        Color gridColor = Color.Black;
-
+        int scaledCellSize = CellSize / scaleFactor;
         spriteBatch.Begin();
-        // Draw selected color
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + 160, UIVariables.OffsetY, 32, 32), UIVariables.SelectedColor);
 
+        // Draw selected color
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + UIVariables.TextInputFieldWidth + 2*UIVariables.ButtonSize, UIVariables.OffsetY, 32, 32), UIVariables.SelectedColor);
+
+        // Get offset values
         var (ofx, ofy) = getOffsetValues();
 
         for (int x = 0; x < GridSize; x++)
         {
             for (int y = 0; y < GridSize; y++)
             {
-                // Draw the cell with UISettings.Offsets
-                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + x * CellSize, ofy + y * CellSize, CellSize, CellSize), GridColors[x, y]);
+                // Calculate the position with scaling and translation
+                int drawX = ofx + x * scaledCellSize + translation.X;
+                int drawY = ofy + y * scaledCellSize + translation.Y;
+
+                // Draw the cell with scaling and translation
+                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(drawX, drawY, scaledCellSize, scaledCellSize), GridColors[x, y]);
             }
         }
         spriteBatch.End();
     }
 
-    public void DrawGrid(SpriteBatch spriteBatch)
-    {
-        Color gridColor = Color.Black;
 
+    public void DrawGrid(SpriteBatch spriteBatch, Color gridColor)
+    {
         spriteBatch.Begin();
         var (ofx, ofy) = getOffsetValues();
         // Draw the outer rectangle with UISettings.Offsets

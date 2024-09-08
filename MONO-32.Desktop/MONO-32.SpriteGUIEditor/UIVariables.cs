@@ -20,9 +20,11 @@ internal static class UIVariables
 
     public static PaintModeEnum PaintMode;
 
-    public static int Margin = 4;
+    public static int Margin = 8;
 
     public static int ButtonSize = 32;
+
+    public static int TextInputFieldWidth = 120;
 
     public static Rectangle Edition;
 

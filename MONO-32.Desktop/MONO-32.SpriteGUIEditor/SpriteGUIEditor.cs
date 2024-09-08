@@ -84,7 +84,7 @@ public class SpriteGUIEditor : Game
             new Rectangle(
                 saveButton.Rectangle.Right + UIVariables.Margin,
                 saveButton.Rectangle.Y,
-                120,
+                UIVariables.TextInputFieldWidth,
                 saveButton.Rectangle.Height));
     }
 

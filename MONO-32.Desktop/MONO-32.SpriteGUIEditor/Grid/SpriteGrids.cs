@@ -27,7 +27,8 @@ internal class SpriteGrids
     }
     public void Draw(SpriteBatch spriteBatch)
     {
-        currentSpriteGrid.Draw(spriteBatch);
-        currentSpriteGrid.DrawGrid(spriteBatch);
+        currentSpriteGrid.Draw(spriteBatch, 1, Point.Zero);
+        currentSpriteGrid.DrawGrid(spriteBatch, Color.Black);
+        currentSpriteGrid.Draw(spriteBatch, 4, new Point(-UIVariables.Edition.Width, UIVariables.Margin + currentSpriteGrid.GridSize * currentSpriteGrid.CellSize));
     }
 }
