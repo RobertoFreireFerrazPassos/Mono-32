@@ -6,6 +6,7 @@ using MONO_32.Core;
 using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor.Buttons;
 using MONO_32.SpriteGUIEditor.Enums;
+using MONO_32.SpriteGUIEditor.Grid;
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,7 +16,7 @@ public class SpriteGUIEditor : Game
 {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
-    SpriteGrid spriteGrid;
+    SpriteGrids spriteGrids;
     Palette palette;
     Buttons.Buttons buttons;
     TextInputField textInputField;
@@ -35,7 +36,8 @@ public class SpriteGUIEditor : Game
         graphics.IsFullScreen = false;
         graphics.ApplyChanges();
 
-        spriteGrid = new SpriteGrid(16, 32);
+        spriteGrids = new SpriteGrids();
+        spriteGrids.AddSprite();
         palette = new Palette(ColorPaletteEnum.Vinik24, 8, 32);
         base.Initialize();
     }
@@ -93,7 +95,7 @@ public class SpriteGUIEditor : Game
         {
             ProcessMouseClicked(InputUtils.MousePosition());
         }
-        spriteGrid.Update();
+        spriteGrids.Update();
         textInputField.Update(gameTime);
         base.Update(gameTime);
     }
@@ -101,16 +103,16 @@ public class SpriteGUIEditor : Game
     private void ProcessMouseClicked(Point mousePosition)
     {
         textInputField.UpdateMouseLeftClicked(mousePosition);
-        spriteGrid.UpdateMouseLeftClicked(mousePosition);
+        spriteGrids.UpdateMouseLeftClicked(mousePosition);
         UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
-        buttons.Update(mousePosition, spriteGrid, GraphicsDevice);
+        buttons.Update(mousePosition, spriteGrids.currentSpriteGrid, GraphicsDevice);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
         buttons.Draw(spriteBatch);
-        spriteGrid.Draw(spriteBatch);
+        spriteGrids.Draw(spriteBatch);
         palette.Draw(spriteBatch);
         textInputField.Draw(spriteBatch);
         base.Draw(gameTime);
