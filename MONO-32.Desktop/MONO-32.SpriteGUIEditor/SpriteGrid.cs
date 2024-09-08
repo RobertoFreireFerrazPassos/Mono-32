@@ -8,7 +8,8 @@ namespace MONO_32.SpriteGUIEditor;
 internal class SpriteGrid
 {
     public Color[,] GridColors;
-    public Color[,] LastGridColors;
+    private List<Color[,]> LastGridColors = new List<Color[,]>();
+    private const int MaxHistorySize = 10;
     public int CellSize; // Size of each cell in the grid
     public int GridSize;  // 8x8 grid
 
@@ -36,7 +37,7 @@ internal class SpriteGrid
         {
             if (InputUtils.IsMouseLeftButtonJustPressed())
             {
-                LastGridColors = CopyColorArray(GridColors);
+                AddToHistory(CopyColorArray(GridColors));
             }
             
             switch (UIVariables.PaintMode)
@@ -58,7 +59,10 @@ internal class SpriteGrid
     {
         if (InputUtils.IsControlZReleased())
         {
-            GridColors = CopyColorArray(LastGridColors);
+            if (LastGridColors.Count > 0)
+            {
+                GetFromHistory();
+            }
         }
     }
 
@@ -158,5 +162,24 @@ internal class SpriteGrid
         }
 
         return copy;
+    }
+
+    private void AddToHistory(Color[,] gridColors)
+    {
+        if (LastGridColors.Count >= MaxHistorySize)
+        {
+            // Remove the oldest state if the list is full
+            LastGridColors.RemoveAt(0);
+        }
+
+        // Add the new state to the history
+        LastGridColors.Add(gridColors);
+    }
+
+    private void GetFromHistory()
+    {
+        var lastGridState = LastGridColors[LastGridColors.Count - 1];
+        GridColors = CopyColorArray(lastGridState);
+        LastGridColors.RemoveAt(LastGridColors.Count - 1);
     }
 }
