@@ -41,6 +41,11 @@ public static class InputUtils
         return _currentMouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton != ButtonState.Pressed;
     }
 
+    public static bool IsMouseLeftButtonReleased()
+    {
+        return _currentMouseState.LeftButton != ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Pressed;
+    }
+
     public static Keys[] GetReleasedKeys()
     {
         return _previousKeyboardState.GetPressedKeys()

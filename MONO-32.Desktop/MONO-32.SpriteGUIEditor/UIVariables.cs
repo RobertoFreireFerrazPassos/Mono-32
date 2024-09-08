@@ -27,6 +27,10 @@ internal static class UIVariables
 
     public static int ButtonSize = 32;
 
+    public static int CellSize = 16;
+
+    public static int GridSize = 32;
+
     public static int TextInputFieldWidth = 120;
 
     public static Rectangle Edition;

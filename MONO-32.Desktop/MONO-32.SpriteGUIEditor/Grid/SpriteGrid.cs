@@ -10,12 +10,13 @@ namespace Grid;
 
 internal class SpriteGrid
 {
-    public Color[,] GridColors;
-    private List<Color[,]> LastGridColors = new List<Color[,]>();
-    private const int MaxHistorySize = 30;
     public int CellSize;
     public int GridSize;
-    private List<Button> Buttons = new List<Button>();
+    public List<Button> Buttons = new List<Button>();
+    public Color[,] GridColors;
+
+    private List<Color[,]> LastGridColors = new List<Color[,]>();
+    private const int MaxHistorySize = 30;
 
     public SpriteGrid(int cellSize, int gridSize)
     {
@@ -29,11 +30,6 @@ internal class SpriteGrid
                 GridColors[x, y] = new Color(0, 0, 0, 0); // invisible
             }
         }
-    }
-
-    public void AddButtons(List<Button> buttons)
-    {
-        Buttons = buttons;
     }
 
     public void UpdateMouseLeftClicked(Point mousePosition, int scaleFactor)
@@ -132,22 +128,25 @@ internal class SpriteGrid
     public void DrawButtons(SpriteBatch spriteBatch, Point translation)
     {
         spriteBatch.Begin();
-        // Get offset values
-        var (ofx, ofy) = getOffsetValues();
 
         for (int i = 0; i < Buttons.Count; i++)
         {
             var color = Color.Black;
-
-            // Calculate the position with scaling and translation
-            int drawX = ofx + i * Buttons[i].Rectangle.Width + translation.X;
-            int drawY = ofy + translation.Y;
-            
-            // Draw the cell with scaling and translation
-            spriteBatch.Draw(Buttons[i].Texture, new Rectangle(drawX, drawY, Buttons[i].Rectangle.Width, Buttons[i].Rectangle.Height), color);
+            var rectangle = GetButtonRectangle(i, translation);
+            spriteBatch.Draw(Buttons[i].Texture, rectangle, color);
         }
 
         spriteBatch.End();
+    }
+
+    public Rectangle GetButtonRectangle(int i, Point translation)
+    {
+        var (ofx, ofy) = getOffsetValues();
+
+        int drawX = ofx + i * Buttons[i].Rectangle.Width + translation.X;
+        int drawY = ofy + translation.Y;
+
+        return new Rectangle(drawX, drawY, Buttons[i].Rectangle.Width, Buttons[i].Rectangle.Height);
     }
 
     public void Fill(Point mousePosition, int scaleFactor)

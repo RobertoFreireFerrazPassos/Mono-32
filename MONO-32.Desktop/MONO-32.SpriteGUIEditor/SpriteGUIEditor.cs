@@ -67,6 +67,10 @@ public class SpriteGUIEditor : Game
         {
             ProcessMouseClicked(InputUtils.MousePosition());
         }
+        if (InputUtils.IsMouseLeftButtonReleased())
+        {
+            spriteGrids.UpdateMouseLeftReleased(InputUtils.MousePosition());
+        }
         spriteGrids.Update();
         buttons.TextInputField.Update(gameTime);
         base.Update(gameTime);
