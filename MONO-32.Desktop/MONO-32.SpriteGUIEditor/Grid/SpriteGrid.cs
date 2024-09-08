@@ -29,9 +29,9 @@ internal class SpriteGrid
         }
     }
 
-    public void UpdateMouseLeftClicked(Point mousePosition)
+    public void UpdateMouseLeftClicked(Point mousePosition, int scaleFactor)
     {
-        var gridPoint = ConvertMousePositionToGridCell(mousePosition);
+        var gridPoint = ConvertMousePositionToGridCell(mousePosition, scaleFactor);
         int x = gridPoint.X;
         int y = gridPoint.Y;
 
@@ -45,7 +45,7 @@ internal class SpriteGrid
             switch (UIVariables.PaintMode)
             {
                 case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Bucket:
-                    Fill(mousePosition);
+                    Fill(mousePosition, scaleFactor);
                     break;
                 case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Pencil:
                     GridColors[x, y] = UIVariables.SelectedColor;
@@ -117,31 +117,32 @@ internal class SpriteGrid
     }
 
 
-    public void DrawGrid(SpriteBatch spriteBatch, Color gridColor)
+    public void DrawGrid(SpriteBatch spriteBatch, int scaleFactor, Color gridColor)
     {
+        int scaledCellSize = CellSize / scaleFactor;
         spriteBatch.Begin();
         var (ofx, ofy) = getOffsetValues();
         // Draw the outer rectangle with UISettings.Offsets
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, GridSize * CellSize, 1), gridColor); // Top
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, 1, GridSize * CellSize), gridColor); // Left
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + GridSize * CellSize - 1, GridSize * CellSize, 1), gridColor); // Bottom
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + GridSize * CellSize - 1, ofy, 1, GridSize * CellSize), gridColor); // Right
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, GridSize * scaledCellSize, 1), gridColor); // Top
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, 1, GridSize * scaledCellSize), gridColor); // Left
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + GridSize * scaledCellSize - 1, GridSize * scaledCellSize, 1), gridColor); // Bottom
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + GridSize * scaledCellSize - 1, ofy, 1, GridSize * scaledCellSize), gridColor); // Right
         for (int x = 0; x < GridSize; x++)
         {
             for (int y = 0; y < GridSize; y++)
             {
                 // Draw vertical lines
-                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + x * CellSize, ofy, 1, GridSize * CellSize), gridColor);
+                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + x * scaledCellSize, ofy, 1, GridSize * scaledCellSize), gridColor);
                 // Draw horizontal lines
-                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + y * CellSize, GridSize * CellSize, 1), gridColor);
+                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + y * scaledCellSize, GridSize * scaledCellSize, 1), gridColor);
             }
         }
         spriteBatch.End();
     }
 
-    public void Fill(Point mousePosition)
+    public void Fill(Point mousePosition, int scaleFactor)
     {
-        var gridPoint = ConvertMousePositionToGridCell(mousePosition);
+        var gridPoint = ConvertMousePositionToGridCell(mousePosition, scaleFactor);
         Color targetColor = GridColors[gridPoint.X, gridPoint.Y];
         if (targetColor == UIVariables.SelectedColor) return;
 
@@ -182,12 +183,13 @@ internal class SpriteGrid
         return exportTexture;
     }
 
-    private Point ConvertMousePositionToGridCell(Point mousePosition)
+    private Point ConvertMousePositionToGridCell(Point mousePosition, int scaleFactor)
     {
+        int scaledCellSize = CellSize / scaleFactor;
         var (ofx, ofy) = getOffsetValues();
         // Convert mouse position to grid cell
-        int x = mousePosition.X - ofx >= 0 ? (mousePosition.X - ofx) / CellSize : -1;
-        int y = mousePosition.Y - ofy >= 0 ? (mousePosition.Y - ofy) / CellSize : -1;
+        int x = mousePosition.X - ofx >= 0 ? (mousePosition.X - ofx) / scaledCellSize : -1;
+        int y = mousePosition.Y - ofy >= 0 ? (mousePosition.Y - ofy) / scaledCellSize : -1;
         return new Point(x, y);
     }
 
