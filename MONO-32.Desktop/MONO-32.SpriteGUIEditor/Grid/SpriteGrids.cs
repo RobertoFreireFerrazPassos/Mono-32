@@ -28,5 +28,6 @@ internal class SpriteGrids
     public void Draw(SpriteBatch spriteBatch)
     {
         currentSpriteGrid.Draw(spriteBatch);
+        currentSpriteGrid.DrawGrid(spriteBatch);
     }
 }

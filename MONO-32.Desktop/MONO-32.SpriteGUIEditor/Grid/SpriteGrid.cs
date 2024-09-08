@@ -100,21 +100,35 @@ internal class SpriteGrid
 
         var (ofx, ofy) = getOffsetValues();
 
-        // Draw the outer rectangle with UISettings.Offsets
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, GridSize * CellSize, 1), gridColor); // Top
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, 1, GridSize * CellSize), gridColor); // Left
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + GridSize * CellSize - 1, GridSize * CellSize, 1), gridColor); // Bottom
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + GridSize * CellSize - 1, ofy, 1, GridSize * CellSize), gridColor); // Right
-
         for (int x = 0; x < GridSize; x++)
         {
             for (int y = 0; y < GridSize; y++)
             {
                 // Draw the cell with UISettings.Offsets
                 spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + x * CellSize, ofy + y * CellSize, CellSize, CellSize), GridColors[x, y]);
-                // Draw vertical lines with UISettings.Offsets
+            }
+        }
+        spriteBatch.End();
+    }
+
+    public void DrawGrid(SpriteBatch spriteBatch)
+    {
+        Color gridColor = Color.Black;
+
+        spriteBatch.Begin();
+        var (ofx, ofy) = getOffsetValues();
+        // Draw the outer rectangle with UISettings.Offsets
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, GridSize * CellSize, 1), gridColor); // Top
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, 1, GridSize * CellSize), gridColor); // Left
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + GridSize * CellSize - 1, GridSize * CellSize, 1), gridColor); // Bottom
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + GridSize * CellSize - 1, ofy, 1, GridSize * CellSize), gridColor); // Right
+        for (int x = 0; x < GridSize; x++)
+        {
+            for (int y = 0; y < GridSize; y++)
+            {
+                // Draw vertical lines
                 spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + x * CellSize, ofy, 1, GridSize * CellSize), gridColor);
-                // Draw horizontal lines with UISettings.Offsets
+                // Draw horizontal lines
                 spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + y * CellSize, GridSize * CellSize, 1), gridColor);
             }
         }
