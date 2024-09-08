@@ -158,10 +158,16 @@ internal class SpriteGrids
                             }
                             return;
                         case Enums.ButtonTypeEnum.Copy:
-                            AddSprite(spriteGrids[i].GridColors, i);
+                            if (spriteGrids.Count < 10)
+                            {
+                                AddSprite(spriteGrids[i].GridColors, i);
+                            }
                             return;
                         case Enums.ButtonTypeEnum.Add:
-                            AddSprite(null, i);
+                            if (spriteGrids.Count < 10)
+                            {
+                                AddSprite(null, i);
+                            }
                             return;
                     }
                 }
