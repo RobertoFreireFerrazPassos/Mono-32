@@ -27,7 +27,7 @@ internal static class UIVariables
 
     public static int ButtonSize = 32;
 
-    public static int CellSize = 16;
+    public static int CellSize = 14;
 
     public static int GridSize = 32;
 

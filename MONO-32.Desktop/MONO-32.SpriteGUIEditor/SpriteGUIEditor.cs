@@ -28,10 +28,10 @@ public class SpriteGUIEditor : Game
         Content.RootDirectory = @"assets";
 
         graphics.PreferredBackBufferWidth = 1200;
-        graphics.PreferredBackBufferHeight = 800;
+        graphics.PreferredBackBufferHeight = 680;
         graphics.IsFullScreen = false;
         graphics.ApplyChanges();
-        palette = new Palette(ColorPaletteEnum.TwilioQuest76, 8, 32);
+        palette = new Palette(ColorPaletteEnum.TwilioQuest76, 8, 16);
         base.Initialize();
     }
 
