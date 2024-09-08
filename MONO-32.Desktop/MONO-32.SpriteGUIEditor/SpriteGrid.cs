@@ -72,24 +72,26 @@ internal class SpriteGrid
 
         spriteBatch.Begin();
         // Draw selected color
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + ((GridSize + 8)* CellSize), UIVariables.OffsetY, CellSize, CellSize), UIVariables.SelectedColor);
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + 160, UIVariables.OffsetY, 32, 32), UIVariables.SelectedColor);
+
+        var (ofx, ofy) = getOffsetValues();
 
         // Draw the outer rectangle with UISettings.Offsets
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX, UIVariables.OffsetY, GridSize * CellSize, 1), gridColor); // Top
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX, UIVariables.OffsetY, 1, GridSize * CellSize), gridColor); // Left
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX, UIVariables.OffsetY + (GridSize * CellSize) - 1, GridSize * CellSize, 1), gridColor); // Bottom
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + (GridSize * CellSize) - 1, UIVariables.OffsetY, 1, GridSize * CellSize), gridColor); // Right
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, GridSize * CellSize, 1), gridColor); // Top
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, 1, GridSize * CellSize), gridColor); // Left
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + (GridSize * CellSize) - 1, GridSize * CellSize, 1), gridColor); // Bottom
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + (GridSize * CellSize) - 1, ofy, 1, GridSize * CellSize), gridColor); // Right
 
         for (int x = 0; x < GridSize; x++)
         {
             for (int y = 0; y < GridSize; y++)
             {
                 // Draw the cell with UISettings.Offsets
-                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + x * CellSize, UIVariables.OffsetY + y * CellSize, CellSize, CellSize), GridColors[x, y]);
+                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + x * CellSize, ofy + y * CellSize, CellSize, CellSize), GridColors[x, y]);
                 // Draw vertical lines with UISettings.Offsets
-                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + x * CellSize, UIVariables.OffsetY, 1, GridSize * CellSize), gridColor);
+                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + x * CellSize, ofy, 1, GridSize * CellSize), gridColor);
                 // Draw horizontal lines with UISettings.Offsets
-                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX, UIVariables.OffsetY + y * CellSize, GridSize * CellSize, 1), gridColor);
+                spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + y * CellSize, GridSize * CellSize, 1), gridColor);
             }
         }
         spriteBatch.End();
@@ -140,11 +142,18 @@ internal class SpriteGrid
 
     private Point ConvertMousePositionToGridCell(Point mousePosition)
     {
+        var (ofx, ofy) = getOffsetValues();
         // Convert mouse position to grid cell
-        int x = mousePosition.X - UIVariables.OffsetX >= 0 ? (mousePosition.X - UIVariables.OffsetX) / CellSize : -1;
-        int y = mousePosition.Y - UIVariables.OffsetY >= 0 ? (mousePosition.Y - UIVariables.OffsetY) / CellSize : -1;
-
+        int x = mousePosition.X - ofx >= 0 ? (mousePosition.X - ofx) / CellSize : -1;
+        int y = mousePosition.Y - ofy >= 0 ? (mousePosition.Y - ofy) / CellSize : -1;
         return new Point(x, y);
+    }
+    
+    private (int, int) getOffsetValues()
+    {
+        var ofx = UIVariables.Edition.Right + UIVariables.Margin;
+        var ofy = UIVariables.Edition.Top + UIVariables.Margin;
+        return (ofx, ofy);
     }
 
     private static Color[,] CopyColorArray(Color[,] original)

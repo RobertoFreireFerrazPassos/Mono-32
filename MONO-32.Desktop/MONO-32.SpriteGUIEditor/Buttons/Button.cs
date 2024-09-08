@@ -12,12 +12,10 @@ internal class Button
 
     public Rectangle Rectangle;
 
-    public int Size = 32;
-
-    public Button(ButtonTypeEnum type, int x, int y, Texture2D texture)
+    public Button(ButtonTypeEnum type, Texture2D texture)
     {
         Type = type;
         Texture = texture;
-        Rectangle = new Rectangle(x, y, Size, Size);
+        Rectangle = new Rectangle(0, 0, UIVariables.ButtonSize, UIVariables.ButtonSize);
     }
 }

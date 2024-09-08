@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MONO_32.SpriteGUIEditor.Enums;
 using MONO_32.SpriteGUIEditor.Extensions;
 using System.Collections.Generic;
 
@@ -10,8 +11,38 @@ internal class Buttons
     private List<Button> Values = new List<Button>();
     private Button selectedButton;
 
-    public Buttons(List<Button> buttons)
+    public Buttons(List<Button> buttons, ButtonTypeEnum buttonSelected)
     {
+        var paintButtons = 0;
+
+        foreach (var button in buttons)
+        {
+            if (button.Type == buttonSelected)
+            {
+                selectedButton = button;
+            }
+
+            if (button.Type == ButtonTypeEnum.Save)
+            {
+                button.Rectangle = new Rectangle(
+                    UIVariables.Edition.Left + button.Rectangle.X,
+                    UIVariables.Edition.Top + button.Rectangle.Y,
+                    button.Rectangle.Width,
+                    button.Rectangle.Height
+                );
+            }
+            else
+            {
+                button.Rectangle = new Rectangle(
+                    UIVariables.PaintButtons.Left + paintButtons * UIVariables.ButtonSize + button.Rectangle.X,
+                    UIVariables.PaintButtons.Top + button.Rectangle.Y,
+                    button.Rectangle.Width,
+                    button.Rectangle.Height
+                );
+                paintButtons++;
+            }
+        }
+
         Values = buttons;
     }
 

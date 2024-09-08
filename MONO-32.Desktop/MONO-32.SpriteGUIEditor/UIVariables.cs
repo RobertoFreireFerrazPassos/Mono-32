@@ -20,8 +20,19 @@ internal static class UIVariables
 
     public static PaintModeEnum PaintMode;
 
+    public static int Margin = 4;
+
+    public static int ButtonSize = 32;
+
+    public static Rectangle Edition;
+
+    public static Rectangle PaintButtons;
+
+    public static Rectangle Pallete;
+
     public static void LoadVariables(
         Texture2D pixelTexture,
+        PaintModeEnum paintModeEnum,
         Color color,
         int offsetX,
         int offsetY)
@@ -30,6 +41,9 @@ internal static class UIVariables
         SelectedColor = color;
         OffsetX = offsetX;
         OffsetY = offsetY;
-        PaintMode = PaintModeEnum.Pencil;
+        PaintMode = paintModeEnum;
+        Edition = new Rectangle(offsetX, offsetY, 8 * 32, 2 * 32);
+        PaintButtons = new Rectangle(offsetX, Edition.Bottom, 8 * 32, 2 * 32);
+        Pallete = new Rectangle(offsetX, offsetY + PaintButtons.Bottom + 32, 8 * 32, 2 * 32);
     }
 }

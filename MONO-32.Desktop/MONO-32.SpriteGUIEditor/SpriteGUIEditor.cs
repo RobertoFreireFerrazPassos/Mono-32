@@ -34,7 +34,7 @@ public class SpriteGUIEditor : Game
         graphics.IsFullScreen = false;
         graphics.ApplyChanges();
 
-        spriteGrid = new SpriteGrid(32, 16);
+        spriteGrid = new SpriteGrid(16, 32);
         palette = new Palette(ColorPaletteEnum.Vinik24, 8, 32);
         base.Initialize();
     }
@@ -44,46 +44,46 @@ public class SpriteGUIEditor : Game
         var pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         pixelTexture.SetData(new Color[] { Color.White });
         spriteBatch = new SpriteBatch(GraphicsDevice);
-        UIVariables.LoadVariables(pixelTexture, palette.ColorPalette[0], 32, 32);
+
+        var paintMode = PaintModeEnum.Pencil;
+        var buttonSelected = ButtonTypeEnum.Pencil;
+        UIVariables.LoadVariables(
+            pixelTexture,
+            paintMode,
+            palette.ColorPalette[0], 
+            32, 
+            32);
         palette.CreatePalleteRectangles(
-            (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
-            4 * spriteGrid.CellSize + UIVariables.OffsetY);
+            UIVariables.OffsetX,
+            UIVariables.Margin + UIVariables.PaintButtons.Bottom);
         var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
         var saveButton = new Button(
             ButtonTypeEnum.Save,
-            (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
-            UIVariables.OffsetY,
             textures["save_button"]);
         var pencilButton = new Button(
             ButtonTypeEnum.Pencil,
-            (spriteGrid.GridSize + 1) * spriteGrid.CellSize + UIVariables.OffsetX,
-            2 * spriteGrid.CellSize + UIVariables.OffsetY,
             textures["pencil_button"]);
         var eraserButton = new Button(
             ButtonTypeEnum.Eraser,
-            (spriteGrid.GridSize + 3) * spriteGrid.CellSize + UIVariables.OffsetX,
-            2 * spriteGrid.CellSize + UIVariables.OffsetY,
             textures["eraser_button"]);
         var bucketButton = new Button(
             ButtonTypeEnum.Bucket,
-            (spriteGrid.GridSize + 5) * spriteGrid.CellSize + UIVariables.OffsetX,
-            2 * spriteGrid.CellSize + UIVariables.OffsetY,
             textures["bucket_button"]);
         buttons = new Buttons.Buttons(new List<Button>()
-        {
-            saveButton,
-            bucketButton,
-            eraserButton,
-            pencilButton
-        });
+            {
+                saveButton,
+                bucketButton,
+                eraserButton,
+                pencilButton
+            }, buttonSelected);
 
         UIVariables.DefaultFont = Content.Load<SpriteFont>(@"fonts\default");
         textInputField = new TextInputField(
-            UIVariables.DefaultFont, 
+            UIVariables.DefaultFont,
             new Rectangle(
-                saveButton.Rectangle.X + 2 * spriteGrid.CellSize,
-                saveButton.Rectangle.Y, 
-                120, 
+                saveButton.Rectangle.Right + UIVariables.Margin,
+                saveButton.Rectangle.Y,
+                120,
                 saveButton.Rectangle.Height));
     }
 
