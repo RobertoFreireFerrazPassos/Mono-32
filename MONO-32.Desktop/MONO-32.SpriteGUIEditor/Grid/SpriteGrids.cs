@@ -77,7 +77,7 @@ internal class SpriteGrids
         for (int i = 0; i < spriteGrids.Count; i++)
         {
             spriteGrids[i].Draw(spriteBatch, miniatureScale, new Point(-UIVariables.Edition.Width + i * totalSize / miniatureScale, 2 * UIVariables.Margin + totalSize));
-            currentSpriteGrid.DrawGrid(spriteBatch, miniatureScale, new Point(-UIVariables.Edition.Width + i * totalSize / miniatureScale, 2 * UIVariables.Margin + totalSize), Color.Black);
+            spriteGrids[i].DrawGrid(spriteBatch, miniatureScale, new Point(-UIVariables.Edition.Width + i * totalSize / miniatureScale, 2 * UIVariables.Margin + totalSize), Color.Black);
             spriteGrids[i].DrawButtons(spriteBatch, new Point(-UIVariables.Edition.Width + i * totalSize / miniatureScale, 3 * UIVariables.Margin + totalSize + totalSize / miniatureScale));
         }
     }

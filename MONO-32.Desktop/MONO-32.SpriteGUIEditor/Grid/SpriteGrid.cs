@@ -38,31 +38,9 @@ internal class SpriteGrid
 
     public void UpdateMouseLeftClicked(Point mousePosition, int scaleFactor)
     {
-        var gridPoint = ConvertMousePositionToGridCell(mousePosition, scaleFactor);
-        int x = gridPoint.X;
-        int y = gridPoint.Y;
-
-        if (x >= 0 && x < GridSize && y >= 0 && y < GridSize)
-        {
-            if (InputUtils.IsMouseLeftButtonJustPressed())
-            {
-                AddToHistory(CopyColorArray(GridColors));
-            }
-
-            switch (UIVariables.PaintMode)
-            {
-                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Bucket:
-                    Fill(mousePosition, scaleFactor);
-                    break;
-                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Pencil:
-                    GridColors[x, y] = UIVariables.SelectedColor;
-                    break;
-                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Eraser:
-                    GridColors[x, y] = new Color(0, 0, 0, 0);
-                    break;
-            }
-        }
+        ProcessGrid(mousePosition, scaleFactor);
     }
+
 
     public void Update()
     {
@@ -215,16 +193,6 @@ internal class SpriteGrid
         return exportTexture;
     }
 
-    private Point ConvertMousePositionToGridCell(Point mousePosition, int scaleFactor)
-    {
-        int scaledCellSize = CellSize / scaleFactor;
-        var (ofx, ofy) = getOffsetValues();
-        // Convert mouse position to grid cell
-        int x = mousePosition.X - ofx >= 0 ? (mousePosition.X - ofx) / scaledCellSize : -1;
-        int y = mousePosition.Y - ofy >= 0 ? (mousePosition.Y - ofy) / scaledCellSize : -1;
-        return new Point(x, y);
-    }
-
     private (int, int) getOffsetValues()
     {
         var ofx = UIVariables.Edition.Right + UIVariables.Margin;
@@ -284,5 +252,43 @@ internal class SpriteGrid
         }
 
         GridColors = newGridColors;
+    }
+
+    private void ProcessGrid(Point mousePosition, int scaleFactor)
+    {
+        var gridPoint = ConvertMousePositionToGridCell(mousePosition, scaleFactor);
+        int x = gridPoint.X;
+        int y = gridPoint.Y;
+
+        if (x >= 0 && x < GridSize && y >= 0 && y < GridSize)
+        {
+            if (InputUtils.IsMouseLeftButtonJustPressed())
+            {
+                AddToHistory(CopyColorArray(GridColors));
+            }
+
+            switch (UIVariables.PaintMode)
+            {
+                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Bucket:
+                    Fill(mousePosition, scaleFactor);
+                    break;
+                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Pencil:
+                    GridColors[x, y] = UIVariables.SelectedColor;
+                    break;
+                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Eraser:
+                    GridColors[x, y] = new Color(0, 0, 0, 0);
+                    break;
+            }
+        }
+    }
+
+    private Point ConvertMousePositionToGridCell(Point mousePosition, int scaleFactor)
+    {
+        int scaledCellSize = CellSize / scaleFactor;
+        var (ofx, ofy) = getOffsetValues();
+        // Convert mouse position to grid cell
+        int x = mousePosition.X - ofx >= 0 ? (mousePosition.X - ofx) / scaledCellSize : -1;
+        int y = mousePosition.Y - ofy >= 0 ? (mousePosition.Y - ofy) / scaledCellSize : -1;
+        return new Point(x, y);
     }
 }
