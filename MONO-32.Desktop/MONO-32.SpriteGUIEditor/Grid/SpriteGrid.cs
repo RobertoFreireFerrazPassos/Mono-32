@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor;
 using MONO_32.SpriteGUIEditor.Buttons;
-using MONO_32.SpriteGUIEditor.Enums;
 using System.Collections.Generic;
 
 namespace Grid;
