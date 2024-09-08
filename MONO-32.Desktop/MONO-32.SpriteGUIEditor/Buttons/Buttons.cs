@@ -85,6 +85,11 @@ internal class Buttons
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             var color = Values[i] == selectedButton ? Color.Green : Color.Black;
+
+            if (Values[i].Type == ButtonTypeEnum.Save && string.IsNullOrWhiteSpace(UIVariables.TextFileName))
+            {
+                color = Color.DarkGray;
+            }
             spriteBatch.Draw(Values[i].Texture, Values[i].Rectangle, color);
             spriteBatch.End();
         }

@@ -27,13 +27,7 @@ public class TextInputField
 
     public void UpdateMouseLeftClicked(Point mousePosition)
     {
-        if (!_fieldRectangle.Contains(mousePosition))
-        {
-            _active = false;
-            return;
-        }
-
-        _active = true;
+        _active = _fieldRectangle.Contains(mousePosition);
     }
 
     public void Update(GameTime gameTime)
