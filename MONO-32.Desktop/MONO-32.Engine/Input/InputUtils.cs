@@ -47,4 +47,9 @@ public static class InputUtils
                 .Where(key => !_currentKeyboardState.IsKeyDown(key))
                 .ToArray();
     }
+
+    public static bool IsKeyPressed(Keys key)
+    {
+        return _currentKeyboardState.IsKeyDown(key);
+    }
 }

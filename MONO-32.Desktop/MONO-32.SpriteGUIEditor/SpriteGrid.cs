@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MONO_32.Engine.Input;
 using System.Collections.Generic;
 
@@ -10,8 +11,8 @@ internal class SpriteGrid
     public Color[,] GridColors;
     private List<Color[,]> LastGridColors = new List<Color[,]>();
     private const int MaxHistorySize = 30;
-    public int CellSize; // Size of each cell in the grid
-    public int GridSize;  // 8x8 grid
+    public int CellSize;
+    public int GridSize;
 
     public SpriteGrid(int cellSize, int gridSize)
     {
@@ -63,6 +64,28 @@ internal class SpriteGrid
             {
                 GetFromHistory();
             }
+        }
+
+        var up = InputUtils.IsKeyPressed(Keys.Up);
+        var down = InputUtils.IsKeyPressed(Keys.Down);
+        var left = InputUtils.IsKeyPressed(Keys.Left);
+        var right = InputUtils.IsKeyPressed(Keys.Right);
+
+        if (up)
+        {
+            MoveGrid(0, -1);
+        }
+        else if (down)
+        {
+            MoveGrid(0, 1);
+        }
+        else if (left)
+        {
+            MoveGrid(-1, 0);
+        }
+        else if (right)
+        {
+            MoveGrid(1, 0);
         }
     }
 
@@ -190,5 +213,23 @@ internal class SpriteGrid
         var lastGridState = LastGridColors[LastGridColors.Count - 1];
         GridColors = CopyColorArray(lastGridState);
         LastGridColors.RemoveAt(LastGridColors.Count - 1);
+    }
+
+    private void MoveGrid(int deltaX, int deltaY)
+    {
+        var newGridColors = new Color[GridSize, GridSize];
+
+        for (int row = 0; row < GridSize; row++)
+        {
+            for (int col = 0; col < GridSize; col++)
+            {
+                int newRow = (row + deltaX + GridSize) % GridSize;
+                int newCol = (col + deltaY + GridSize) % GridSize;
+
+                newGridColors[newRow, newCol] = GridColors[row, col];
+            }
+        }
+
+        GridColors = newGridColors;
     }
 }
