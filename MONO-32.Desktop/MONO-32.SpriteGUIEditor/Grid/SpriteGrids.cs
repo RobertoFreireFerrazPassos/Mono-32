@@ -28,8 +28,14 @@ internal class SpriteGrids
     }
     public void Draw(SpriteBatch spriteBatch)
     {
+        var miniatureScale = 4;
+        var totalSize = currentSpriteGrid.GridSize * currentSpriteGrid.CellSize;
         currentSpriteGrid.Draw(spriteBatch, scaleFactor, Point.Zero);
         currentSpriteGrid.DrawGrid(spriteBatch, scaleFactor, Color.Black);
-        currentSpriteGrid.Draw(spriteBatch, 4, new Point(-UIVariables.Edition.Width, UIVariables.Margin + currentSpriteGrid.GridSize * currentSpriteGrid.CellSize));
+
+        for (int i = 0; i < spriteGrids.Count; i++)
+        {
+            spriteGrids[i].Draw(spriteBatch, miniatureScale, new Point(-UIVariables.Edition.Width + i * totalSize/miniatureScale, 2 * UIVariables.Margin + totalSize));
+        }
     }
 }
