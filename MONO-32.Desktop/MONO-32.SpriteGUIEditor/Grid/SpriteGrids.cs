@@ -3,10 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MONO_32.SpriteGUIEditor.Buttons;
 using MONO_32.SpriteGUIEditor.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Transactions;
 
 namespace MONO_32.SpriteGUIEditor.Grid;
 
@@ -138,7 +136,12 @@ internal class SpriteGrids
                         case Enums.ButtonTypeEnum.Delete:
                             if (spriteGrids.Count > 1)
                             {
+                                var update = currentSpriteGrid == spriteGrids[i];
                                 spriteGrids.Remove(spriteGrids[i]);
+                                if (update)
+                                {
+                                    currentSpriteGrid = spriteGrids.First();
+                                }
                             }
                             return;
                         case Enums.ButtonTypeEnum.LeftArrow:
