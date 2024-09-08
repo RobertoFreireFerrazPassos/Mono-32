@@ -77,7 +77,7 @@ internal class SpriteGrid
         spriteBatch.Begin();
 
         // Draw selected color
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + UIVariables.TextInputFieldWidth + 2*UIVariables.ButtonSize, UIVariables.OffsetY, 32, 32), UIVariables.SelectedColor);
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(UIVariables.OffsetX + UIVariables.TextInputFieldWidth + 2*UIVariables.ButtonSize, UIVariables.OffsetY, UIVariables.ButtonSize, UIVariables.ButtonSize), UIVariables.SelectedColor);
 
         // Get offset values
         var (ofx, ofy) = getOffsetValues();

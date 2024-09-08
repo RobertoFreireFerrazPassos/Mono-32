@@ -84,12 +84,12 @@ public class TextInputField
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(_fieldRectangle.Right - 1, _fieldRectangle.Y, 1, _fieldRectangle.Height), _borderColor); // Right
 
         // Draw text
-        spriteBatch.DrawString(_font, UIVariables.TextFileName, new Vector2(_fieldRectangle.X + 5, _fieldRectangle.Y + 5), _textColor);
+        spriteBatch.DrawString(_font, UIVariables.TextFileName, new Vector2(_fieldRectangle.X + 5, _fieldRectangle.Y + 2), _textColor);
 
         // Draw cursor
         if (_showCursor && _active)
         {
-            Vector2 cursorPosition = new Vector2(_fieldRectangle.X + 5 + _font.MeasureString(UIVariables.TextFileName).X, _fieldRectangle.Y + 5);
+            Vector2 cursorPosition = new Vector2(_fieldRectangle.X + 5 + _font.MeasureString(UIVariables.TextFileName).X, _fieldRectangle.Y + 2);
             spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle((int)cursorPosition.X, (int)cursorPosition.Y, 2, (int)_font.MeasureString("W").Y), _textColor);
         }
         spriteBatch.End();
