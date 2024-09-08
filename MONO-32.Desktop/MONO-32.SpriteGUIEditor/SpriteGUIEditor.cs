@@ -89,19 +89,24 @@ public class SpriteGUIEditor : Game
 
     protected override void Update(GameTime gameTime)
     {
-        // Check for mouse input
+        InputUtils.Update();
+
         MouseState mouseState = Mouse.GetState();
         if (mouseState.LeftButton == ButtonState.Pressed)
         {
-            var mousePosition = mouseState.Position;
-            spriteGrid.Update(mousePosition);
-            UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
-            buttons.Update(mousePosition, spriteGrid, GraphicsDevice);
+            ProcessMouseClicked(mouseState.Position);
         }
 
+        spriteGrid.Update();
         textInputField.Update(gameTime);
-        InputUtils.Update();
         base.Update(gameTime);
+    }
+
+    private void ProcessMouseClicked(Point mousePosition)
+    {
+        spriteGrid.UpdateMouseLeftClicked(mousePosition);
+        UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
+        buttons.Update(mousePosition, spriteGrid, GraphicsDevice);
     }
 
     protected override void Draw(GameTime gameTime)

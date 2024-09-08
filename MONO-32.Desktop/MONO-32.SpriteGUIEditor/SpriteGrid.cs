@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MONO_32.Engine.Input;
 using System.Collections.Generic;
 
 namespace MONO_32.SpriteGUIEditor;
@@ -7,6 +8,7 @@ namespace MONO_32.SpriteGUIEditor;
 internal class SpriteGrid
 {
     public Color[,] GridColors;
+    public Color[,] LastGridColors;
     public int CellSize; // Size of each cell in the grid
     public int GridSize;  // 8x8 grid
 
@@ -24,7 +26,7 @@ internal class SpriteGrid
         }
     }
 
-    public void Update(Point mousePosition)
+    public void UpdateMouseLeftClicked(Point mousePosition)
     {
         var gridPoint = ConvertMousePositionToGridCell(mousePosition);
         int x = gridPoint.X;
@@ -32,6 +34,11 @@ internal class SpriteGrid
 
         if (x >= 0 && x < GridSize && y >= 0 && y < GridSize)
         {
+            if (InputUtils.IsMouseLeftButtonJustPressed())
+            {
+                LastGridColors = CopyColorArray(GridColors);
+            }
+            
             switch (UIVariables.PaintMode)
             {
                 case Enums.PaintModeEnum.Bucket:
@@ -44,6 +51,14 @@ internal class SpriteGrid
                     GridColors[x, y] = new Color(0, 0, 0, 0);
                     break;
             }
+        }
+    }
+
+    public void Update()
+    {
+        if (InputUtils.IsControlZReleased())
+        {
+            GridColors = CopyColorArray(LastGridColors);
         }
     }
 
@@ -126,5 +141,22 @@ internal class SpriteGrid
         int y = mousePosition.Y - UIVariables.OffsetY >= 0 ? (mousePosition.Y - UIVariables.OffsetY) / CellSize : -1;
 
         return new Point(x, y);
+    }
+
+    private static Color[,] CopyColorArray(Color[,] original)
+    {
+        int rows = original.GetLength(0);
+        int cols = original.GetLength(1);
+        Color[,] copy = new Color[rows, cols];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                copy[i, j] = original[i, j];
+            }
+        }
+
+        return copy;
     }
 }
