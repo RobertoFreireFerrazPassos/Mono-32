@@ -20,14 +20,19 @@ internal class SpriteGrids
         AddSprite();
     }
 
-    public void AddSprite()
+    public void AddSprite(Color[,] gridColor = null)
     {
         currentSpriteGrid = new SpriteGrid(UIVariables.CellSize, UIVariables.GridSize);
+
+        if (gridColor is not null)
+        {
+            currentSpriteGrid.GridColors = currentSpriteGrid.CopyColorArray(gridColor);
+        }
 
         var buttons = new List<Button>();
 
         buttons.Add(new Button(
-                ButtonTypeEnum.DeleteMiniature,
+                ButtonTypeEnum.Delete,
                 UIVariables.Textures["delete_button"]
             ));
         buttons.Add(new Button(
@@ -111,6 +116,15 @@ internal class SpriteGrids
                 {
                     switch (buttons[j].Type)
                     {
+                        case Enums.ButtonTypeEnum.Delete:
+                            break;
+                        case Enums.ButtonTypeEnum.LeftArrow:
+                            break;
+                        case Enums.ButtonTypeEnum.RightArrow:
+                            break;
+                        case Enums.ButtonTypeEnum.Copy:
+                            AddSprite(currentSpriteGrid.GridColors);
+                            break;
                         case Enums.ButtonTypeEnum.Add:
                             AddSprite();
                             break;

@@ -192,14 +192,7 @@ internal class SpriteGrid
         return exportTexture;
     }
 
-    private (int, int) getOffsetValues()
-    {
-        var ofx = UIVariables.Edition.Right + UIVariables.Margin;
-        var ofy = UIVariables.Edition.Top + UIVariables.Margin;
-        return (ofx, ofy);
-    }
-
-    private static Color[,] CopyColorArray(Color[,] original)
+    public Color[,] CopyColorArray(Color[,] original)
     {
         int rows = original.GetLength(0);
         int cols = original.GetLength(1);
@@ -214,6 +207,12 @@ internal class SpriteGrid
         }
 
         return copy;
+    }
+    private (int, int) getOffsetValues()
+    {
+        var ofx = UIVariables.Edition.Right + UIVariables.Margin;
+        var ofy = UIVariables.Edition.Top + UIVariables.Margin;
+        return (ofx, ofy);
     }
 
     private void AddToHistory(Color[,] gridColors)

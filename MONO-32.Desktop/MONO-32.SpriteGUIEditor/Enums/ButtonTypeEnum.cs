@@ -6,7 +6,7 @@ internal enum ButtonTypeEnum
     Bucket = 2,
     Eraser = 3,
     Pencil = 4,
-    DeleteMiniature = 5,
+    Delete = 5,
     LeftArrow = 6,
     RightArrow = 7,
     Copy = 8,
