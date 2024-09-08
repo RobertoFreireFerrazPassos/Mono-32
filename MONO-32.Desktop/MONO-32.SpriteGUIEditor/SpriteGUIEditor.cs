@@ -88,13 +88,10 @@ public class SpriteGUIEditor : Game
     protected override void Update(GameTime gameTime)
     {
         InputUtils.Update();
-
-        MouseState mouseState = Mouse.GetState();
-        if (mouseState.LeftButton == ButtonState.Pressed)
+        if (InputUtils.IsMouseLeftButtonPressed())
         {
-            ProcessMouseClicked(mouseState.Position);
+            ProcessMouseClicked(InputUtils.MousePosition());
         }
-
         spriteGrid.Update();
         textInputField.Update(gameTime);
         base.Update(gameTime);

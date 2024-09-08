@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace MONO_32.Engine.Input;
 
@@ -28,6 +29,11 @@ public static class InputUtils
     public static bool IsMouseLeftButtonPressed()
     {
         return _currentMouseState.LeftButton == ButtonState.Pressed;
+    }
+
+    public static Point MousePosition()
+    {
+        return _currentMouseState.Position;
     }
 
     public static bool IsMouseLeftButtonJustPressed()
