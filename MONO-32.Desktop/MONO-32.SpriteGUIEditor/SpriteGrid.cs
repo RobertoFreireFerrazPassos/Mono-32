@@ -9,7 +9,7 @@ internal class SpriteGrid
 {
     public Color[,] GridColors;
     private List<Color[,]> LastGridColors = new List<Color[,]>();
-    private const int MaxHistorySize = 10;
+    private const int MaxHistorySize = 30;
     public int CellSize; // Size of each cell in the grid
     public int GridSize;  // 8x8 grid
 
