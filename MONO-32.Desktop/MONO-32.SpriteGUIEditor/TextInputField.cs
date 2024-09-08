@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor;
-using static System.Net.Mime.MediaTypeNames;
 
 public class TextInputField
 {
@@ -16,6 +15,7 @@ public class TextInputField
     private bool _showCursor = true;
     private float _cursorBlinkRate = 0.5f; // Cursor blink rate in seconds
     private int LimitTextLength = 10;
+    private bool _active = false;
 
     public TextInputField(SpriteFont font, Rectangle fieldRectangle)
     {
@@ -23,8 +23,24 @@ public class TextInputField
         _fieldRectangle = fieldRectangle;
     }
 
+    public void UpdateMouseLeftClicked(Point mousePosition)
+    {
+        if (!_fieldRectangle.Contains(mousePosition))
+        {
+            _active = false;
+            return;
+        }
+
+        _active = true;
+    }
+
     public void Update(GameTime gameTime)
     {
+        if (!_active)
+        {
+            return;
+        }
+
         var elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         // Handle cursor blinking
@@ -75,7 +91,7 @@ public class TextInputField
         spriteBatch.DrawString(_font, UIVariables.TextFileName, new Vector2(_fieldRectangle.X + 5, _fieldRectangle.Y + 5), _textColor);
 
         // Draw cursor
-        if (_showCursor)
+        if (_showCursor && _active)
         {
             Vector2 cursorPosition = new Vector2(_fieldRectangle.X + 5 + _font.MeasureString(UIVariables.TextFileName).X, _fieldRectangle.Y + 5);
             spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle((int)cursorPosition.X, (int)cursorPosition.Y, 2, (int)_font.MeasureString("W").Y), _textColor);

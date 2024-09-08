@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MONO_32.Core;
 using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor.Buttons;
@@ -99,6 +98,7 @@ public class SpriteGUIEditor : Game
 
     private void ProcessMouseClicked(Point mousePosition)
     {
+        textInputField.UpdateMouseLeftClicked(mousePosition);
         spriteGrid.UpdateMouseLeftClicked(mousePosition);
         UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
         buttons.Update(mousePosition, spriteGrid, GraphicsDevice);
@@ -107,12 +107,10 @@ public class SpriteGUIEditor : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
         buttons.Draw(spriteBatch);
         spriteGrid.Draw(spriteBatch);
         palette.Draw(spriteBatch);
         textInputField.Draw(spriteBatch);
-
         base.Draw(gameTime);
     }
 }
