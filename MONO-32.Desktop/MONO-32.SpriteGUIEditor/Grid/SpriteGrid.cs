@@ -192,7 +192,7 @@ internal class SpriteGrid
         return exportTexture;
     }
 
-    public Color[,] CopyColorArray(Color[,] original)
+    public static Color[,] CopyColorArray(Color[,] original)
     {
         int rows = original.GetLength(0);
         int cols = original.GetLength(1);

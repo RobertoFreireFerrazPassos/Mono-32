@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MONO_32.SpriteGUIEditor.Buttons;
 using MONO_32.SpriteGUIEditor.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MONO_32.SpriteGUIEditor.Grid;
 
@@ -20,13 +21,13 @@ internal class SpriteGrids
         AddSprite();
     }
 
-    public void AddSprite(Color[,] gridColor = null)
+    public void AddSprite(Color[,] gridColor = null, int index = 0)
     {
-        currentSpriteGrid = new SpriteGrid(UIVariables.CellSize, UIVariables.GridSize);
+        var newSpriteGrid = new SpriteGrid(UIVariables.CellSize, UIVariables.GridSize);
 
         if (gridColor is not null)
         {
-            currentSpriteGrid.GridColors = currentSpriteGrid.CopyColorArray(gridColor);
+            newSpriteGrid.GridColors = SpriteGrid.CopyColorArray(gridColor);
         }
 
         var buttons = new List<Button>();
@@ -61,8 +62,18 @@ internal class SpriteGrids
                 UIVariables.ButtonSize * 4 / 5);
         }
 
-        currentSpriteGrid.Buttons = buttons;
-        spriteGrids.Add(currentSpriteGrid);
+        newSpriteGrid.Buttons = buttons;
+
+        if (index == spriteGrids.Count)
+        {
+            spriteGrids.Add(newSpriteGrid);
+        }
+        else
+        {
+            spriteGrids.Insert(index + 1, newSpriteGrid);
+        }
+
+        currentSpriteGrid = newSpriteGrid;
     }
 
     public void UpdateMouseLeftClicked(Point mousePosition)
@@ -117,17 +128,33 @@ internal class SpriteGrids
                     switch (buttons[j].Type)
                     {
                         case Enums.ButtonTypeEnum.Delete:
-                            break;
+                            if (spriteGrids.Count > 1)
+                            {
+                                spriteGrids.Remove(spriteGrids[i]);
+                            }
+                            return;
                         case Enums.ButtonTypeEnum.LeftArrow:
-                            break;
+                            if (i > 0)
+                            {
+                                SpriteGrid temp = spriteGrids[i];
+                                spriteGrids[i] = spriteGrids[i-1];
+                                spriteGrids[i - 1] = temp;
+                            }
+                            return;
                         case Enums.ButtonTypeEnum.RightArrow:
-                            break;
+                            if (i < spriteGrids.Count - 1)
+                            {
+                                SpriteGrid temp = spriteGrids[i];
+                                spriteGrids[i] = spriteGrids[i + 1];
+                                spriteGrids[i + 1] = temp;
+                            }
+                            return;
                         case Enums.ButtonTypeEnum.Copy:
-                            AddSprite(currentSpriteGrid.GridColors);
-                            break;
+                            AddSprite(spriteGrids[i].GridColors, i);
+                            return;
                         case Enums.ButtonTypeEnum.Add:
-                            AddSprite();
-                            break;
+                            AddSprite(null, i);
+                            return;
                     }
                 }
             }
