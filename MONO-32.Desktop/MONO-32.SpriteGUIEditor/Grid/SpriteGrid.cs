@@ -124,12 +124,17 @@ internal class SpriteGrid
         spriteBatch.End();
     }
 
-    public void DrawGrid(SpriteBatch spriteBatch, int scaleFactor, Color gridColor)
+    public void DrawGrid(SpriteBatch spriteBatch, int scaleFactor, Point translation, Color gridColor)
     {
         int scaledCellSize = CellSize / scaleFactor;
         spriteBatch.Begin();
         var (ofx, ofy) = getOffsetValues();
-        // Draw the outer rectangle with UISettings.Offsets
+
+        // Calculate the position with scaling and translation
+        ofx = ofx + translation.X;
+        ofy = ofy + translation.Y;
+
+        // Draw the outer rectangle
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, GridSize * scaledCellSize, 1), gridColor); // Top
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, 1, GridSize * scaledCellSize), gridColor); // Left
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + GridSize * scaledCellSize - 1, GridSize * scaledCellSize, 1), gridColor); // Bottom
