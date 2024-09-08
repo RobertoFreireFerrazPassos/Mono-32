@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MONO_32.SpriteGUIEditor;
 using MONO_32.SpriteGUIEditor.Enums;
 
-namespace MONO_32.SpriteGUIEditor;
+namespace Buttons;
 
 internal class Palette
 {
@@ -29,8 +30,8 @@ internal class Palette
         PaletteRectangles = new Rectangle[ColorPalette.Length];
         for (int i = 0; i < ColorPalette.Length; i++)
         {
-            int x = (i % Columns) * PaletteSize; // Arrange palette in Columns
-            int y = (i / Columns) * PaletteSize; // Arrange palette in rows
+            int x = i % Columns * PaletteSize; // Arrange palette in Columns
+            int y = i / Columns * PaletteSize; // Arrange palette in rows
             PaletteRectangles[i] = new Rectangle(UIVariables.Pallete.Left + x, UIVariables.Pallete.Top + y, PaletteSize, PaletteSize);
         }
     }
@@ -58,7 +59,7 @@ internal class Palette
         }
     }
 
-    private Color[]? GetPallete(ColorPaletteEnum colorPaletteEnum)
+    private Color[] GetPallete(ColorPaletteEnum colorPaletteEnum)
     {
         switch (colorPaletteEnum)
         {

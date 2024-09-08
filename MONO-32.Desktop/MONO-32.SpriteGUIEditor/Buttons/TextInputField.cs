@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using MONO_32.Engine.Input;
 using MONO_32.SpriteGUIEditor;
 
+namespace Buttons;
+
 public class TextInputField
 {
     private SpriteFont _font;

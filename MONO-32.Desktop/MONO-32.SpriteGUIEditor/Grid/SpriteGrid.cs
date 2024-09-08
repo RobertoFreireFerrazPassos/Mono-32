@@ -2,9 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MONO_32.Engine.Input;
+using MONO_32.SpriteGUIEditor;
 using System.Collections.Generic;
 
-namespace MONO_32.SpriteGUIEditor;
+namespace Grid;
 
 internal class SpriteGrid
 {
@@ -40,16 +41,16 @@ internal class SpriteGrid
             {
                 AddToHistory(CopyColorArray(GridColors));
             }
-            
+
             switch (UIVariables.PaintMode)
             {
-                case Enums.PaintModeEnum.Bucket:
+                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Bucket:
                     Fill(mousePosition);
                     break;
-                case Enums.PaintModeEnum.Pencil:
+                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Pencil:
                     GridColors[x, y] = UIVariables.SelectedColor;
                     break;
-                case Enums.PaintModeEnum.Eraser:
+                case MONO_32.SpriteGUIEditor.Enums.PaintModeEnum.Eraser:
                     GridColors[x, y] = new Color(0, 0, 0, 0);
                     break;
             }
@@ -102,8 +103,8 @@ internal class SpriteGrid
         // Draw the outer rectangle with UISettings.Offsets
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, GridSize * CellSize, 1), gridColor); // Top
         spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy, 1, GridSize * CellSize), gridColor); // Left
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + (GridSize * CellSize) - 1, GridSize * CellSize, 1), gridColor); // Bottom
-        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + (GridSize * CellSize) - 1, ofy, 1, GridSize * CellSize), gridColor); // Right
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx, ofy + GridSize * CellSize - 1, GridSize * CellSize, 1), gridColor); // Bottom
+        spriteBatch.Draw(UIVariables.PixelTexture, new Rectangle(ofx + GridSize * CellSize - 1, ofy, 1, GridSize * CellSize), gridColor); // Right
 
         for (int x = 0; x < GridSize; x++)
         {
@@ -171,7 +172,7 @@ internal class SpriteGrid
         int y = mousePosition.Y - ofy >= 0 ? (mousePosition.Y - ofy) / CellSize : -1;
         return new Point(x, y);
     }
-    
+
     private (int, int) getOffsetValues()
     {
         var ofx = UIVariables.Edition.Right + UIVariables.Margin;

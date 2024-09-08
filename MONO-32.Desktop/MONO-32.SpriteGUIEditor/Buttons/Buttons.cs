@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Grid;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MONO_32.SpriteGUIEditor.Enums;
 using MONO_32.SpriteGUIEditor.Extensions;
