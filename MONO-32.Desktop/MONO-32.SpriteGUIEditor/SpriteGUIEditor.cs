@@ -1,5 +1,4 @@
 ﻿using Buttons;
-using Grid;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MONO_32.Core;
@@ -19,7 +18,6 @@ public class SpriteGUIEditor : Game
     SpriteGrids spriteGrids;
     Palette palette;
     Buttons.Buttons buttons;
-    TextInputField textInputField;
 
     public SpriteGUIEditor()
     {
@@ -44,46 +42,21 @@ public class SpriteGUIEditor : Game
         var pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         pixelTexture.SetData(new Color[] { Color.White });
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        UIVariables.DefaultFont = Content.Load<SpriteFont>(@"fonts\default");
 
-        var paintMode = PaintModeEnum.Pencil;
+        // start with pencil
+        var paintModeSelected = PaintModeEnum.Pencil;
         var buttonSelected = ButtonTypeEnum.Pencil;
+
         UIVariables.LoadVariables(
             pixelTexture,
-            paintMode,
+            paintModeSelected,
             palette.ColorPalette[0], 
             32, 
             32);
         palette.CreatePalleteRectangles();
         UIVariables.Textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
-        var saveButton = new Button(
-            ButtonTypeEnum.Save,
-            UIVariables.Textures["save_button"]);
-        var pencilButton = new Button(
-            ButtonTypeEnum.Pencil,
-            UIVariables.Textures["pencil_button"]);
-        var eraserButton = new Button(
-            ButtonTypeEnum.Eraser,
-            UIVariables.Textures["eraser_button"]);
-        var bucketButton = new Button(
-            ButtonTypeEnum.Bucket,
-            UIVariables.Textures["bucket_button"]);
-        buttons = new Buttons.Buttons(new List<Button>()
-            {
-                saveButton,
-                bucketButton,
-                eraserButton,
-                pencilButton
-            }, buttonSelected);
-
-        UIVariables.DefaultFont = Content.Load<SpriteFont>(@"fonts\default");
-        textInputField = new TextInputField(
-            UIVariables.DefaultFont,
-            new Rectangle(
-                saveButton.Rectangle.Right + UIVariables.Margin,
-                saveButton.Rectangle.Y,
-                UIVariables.TextInputFieldWidth,
-                saveButton.Rectangle.Height));
-
+        buttons = new Buttons.Buttons(buttonSelected);
         spriteGrids = new SpriteGrids();
     }
 
@@ -95,13 +68,13 @@ public class SpriteGUIEditor : Game
             ProcessMouseClicked(InputUtils.MousePosition());
         }
         spriteGrids.Update();
-        textInputField.Update(gameTime);
+        buttons.TextInputField.Update(gameTime);
         base.Update(gameTime);
     }
 
     private void ProcessMouseClicked(Point mousePosition)
     {
-        textInputField.UpdateMouseLeftClicked(mousePosition);
+        buttons.TextInputField.UpdateMouseLeftClicked(mousePosition);
         spriteGrids.UpdateMouseLeftClicked(mousePosition);
         UIVariables.SelectedColor = palette.UpdateSelectedColor(mousePosition) ?? UIVariables.SelectedColor;
         buttons.Update(mousePosition, spriteGrids.currentSpriteGrid, GraphicsDevice);
@@ -113,7 +86,7 @@ public class SpriteGUIEditor : Game
         buttons.Draw(spriteBatch);
         spriteGrids.Draw(spriteBatch);
         palette.Draw(spriteBatch);
-        textInputField.Draw(spriteBatch);
+        buttons.TextInputField.Draw(spriteBatch);
         base.Draw(gameTime);
     }
 }

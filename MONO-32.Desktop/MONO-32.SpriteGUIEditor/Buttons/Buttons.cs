@@ -1,4 +1,5 @@
-﻿using Grid;
+﻿using Buttons;
+using Grid;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MONO_32.SpriteGUIEditor.Enums;
@@ -9,11 +10,34 @@ namespace MONO_32.SpriteGUIEditor.Buttons;
 
 internal class Buttons
 {
-    private List<Button> Values = new List<Button>();
+    public TextInputField TextInputField;
+
+    private List<Button> buttons = new List<Button>();
     private Button selectedButton;
 
-    public Buttons(List<Button> buttons, ButtonTypeEnum buttonSelected)
+    public Buttons(ButtonTypeEnum buttonSelected)
     {
+        var saveButton = new Button(
+            ButtonTypeEnum.Save,
+            UIVariables.Textures["save_button"]);
+        var pencilButton = new Button(
+            ButtonTypeEnum.Pencil,
+            UIVariables.Textures["pencil_button"]);
+        var eraserButton = new Button(
+            ButtonTypeEnum.Eraser,
+            UIVariables.Textures["eraser_button"]);
+        var bucketButton = new Button(
+            ButtonTypeEnum.Bucket,
+            UIVariables.Textures["bucket_button"]);
+
+        buttons = new List<Button>()
+            {
+                saveButton,
+                bucketButton,
+                eraserButton,
+                pencilButton
+            };
+
         var paintButtons = 0;
 
         foreach (var button in buttons)
@@ -44,16 +68,22 @@ internal class Buttons
             }
         }
 
-        Values = buttons;
+        TextInputField = new TextInputField(
+            UIVariables.DefaultFont,
+            new Rectangle(
+                saveButton.Rectangle.Right + UIVariables.Margin,
+                saveButton.Rectangle.Y,
+                UIVariables.TextInputFieldWidth,
+                saveButton.Rectangle.Height));
     }
 
     public void Update(Point mousePosition, SpriteGrid spriteGrid, GraphicsDevice graphicsDevice)
     {
-        for (int i = 0; i < Values.Count; i++)
+        for (int i = 0; i < buttons.Count; i++)
         {
-            if (Values[i].Rectangle.Contains(mousePosition))
+            if (buttons[i].Rectangle.Contains(mousePosition))
             {
-                switch (Values[i].Type)
+                switch (buttons[i].Type)
                 {
                     case Enums.ButtonTypeEnum.Save:
                         if (!string.IsNullOrWhiteSpace(UIVariables.TextFileName))
@@ -63,15 +93,15 @@ internal class Buttons
                         }
                         break;
                     case Enums.ButtonTypeEnum.Bucket:
-                        selectedButton = Values[i]; 
+                        selectedButton = buttons[i]; 
                         UIVariables.PaintMode = Enums.PaintModeEnum.Bucket;
                         break;
                     case Enums.ButtonTypeEnum.Pencil:
-                        selectedButton = Values[i]; 
+                        selectedButton = buttons[i]; 
                         UIVariables.PaintMode = Enums.PaintModeEnum.Pencil;
                         break;
                     case Enums.ButtonTypeEnum.Eraser:
-                        selectedButton = Values[i]; 
+                        selectedButton = buttons[i]; 
                         UIVariables.PaintMode = Enums.PaintModeEnum.Eraser;
                         break;
                 }
@@ -81,16 +111,16 @@ internal class Buttons
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        for (int i = 0; i < Values.Count; i++)
+        for (int i = 0; i < buttons.Count; i++)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            var color = Values[i] == selectedButton ? Color.Green : Color.Black;
+            var color = buttons[i] == selectedButton ? Color.Green : Color.Black;
 
-            if (Values[i].Type == ButtonTypeEnum.Save && string.IsNullOrWhiteSpace(UIVariables.TextFileName))
+            if (buttons[i].Type == ButtonTypeEnum.Save && string.IsNullOrWhiteSpace(UIVariables.TextFileName))
             {
                 color = Color.DarkGray;
             }
-            spriteBatch.Draw(Values[i].Texture, Values[i].Rectangle, color);
+            spriteBatch.Draw(buttons[i].Texture, buttons[i].Rectangle, color);
             spriteBatch.End();
         }
     }
