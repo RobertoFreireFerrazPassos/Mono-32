@@ -42,8 +42,8 @@ internal static class UIVariables
         OffsetX = offsetX;
         OffsetY = offsetY;
         PaintMode = paintModeEnum;
-        Edition = new Rectangle(offsetX, offsetY, 8 * 32, 2 * 32);
-        PaintButtons = new Rectangle(offsetX, Edition.Bottom, 8 * 32, 2 * 32);
-        Pallete = new Rectangle(offsetX, offsetY + PaintButtons.Bottom + 32, 8 * 32, 2 * 32);
+        Edition = new Rectangle(offsetX, offsetY, 8 * 32, 1 * 32);
+        PaintButtons = new Rectangle(Edition.Left, Edition.Bottom + Margin, 8 * 32, 1 * 32);
+        Pallete = new Rectangle(PaintButtons.Left, PaintButtons.Bottom + Margin, 8 * 32, 6 * 32);
     }
 }

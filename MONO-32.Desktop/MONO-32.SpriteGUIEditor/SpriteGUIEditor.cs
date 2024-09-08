@@ -53,9 +53,7 @@ public class SpriteGUIEditor : Game
             palette.ColorPalette[0], 
             32, 
             32);
-        palette.CreatePalleteRectangles(
-            UIVariables.OffsetX,
-            UIVariables.Margin + UIVariables.PaintButtons.Bottom);
+        palette.CreatePalleteRectangles();
         var textures = FileUtils.GetAllImages(GraphicsDevice, Directory.GetFiles("assets\\imgs\\", "*.png", SearchOption.AllDirectories));
         var saveButton = new Button(
             ButtonTypeEnum.Save,

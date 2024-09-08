@@ -24,16 +24,14 @@ internal class Palette
         ColorPalette = GetPallete(colorPaletteEnum);
     }
 
-    public void CreatePalleteRectangles(
-        int offsetX,
-        int offsetY)
+    public void CreatePalleteRectangles()
     {
         PaletteRectangles = new Rectangle[ColorPalette.Length];
         for (int i = 0; i < ColorPalette.Length; i++)
         {
             int x = (i % Columns) * PaletteSize; // Arrange palette in Columns
             int y = (i / Columns) * PaletteSize; // Arrange palette in rows
-            PaletteRectangles[i] = new Rectangle(offsetX + x, offsetY + y, PaletteSize, PaletteSize);
+            PaletteRectangles[i] = new Rectangle(UIVariables.Pallete.Left + x, UIVariables.Pallete.Top + y, PaletteSize, PaletteSize);
         }
     }
 
