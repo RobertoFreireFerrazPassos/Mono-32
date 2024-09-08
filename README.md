@@ -3,7 +3,7 @@ A game engine based on monogame framework
 
 # Backlog items
 
-## Add input field
+## Add Layers in sprite
 
 # References:
 
